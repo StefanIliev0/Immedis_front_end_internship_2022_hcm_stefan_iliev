@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { AuthModule } from './feature/auth/auth.module';
 import { CompanyModule } from './feature/company/company.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { CompanyModule } from './feature/company/company.module';
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot({}, {}),
+    CoreModule,
     AuthModule,
     CompanyModule
   ],
