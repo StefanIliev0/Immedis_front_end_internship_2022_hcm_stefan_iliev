@@ -1,8 +1,8 @@
 
   :root{
       --white: rgb(255, 255,255);
-      --backgroud-module : rgba(58, 58, 168, 0.33);
+      --backgroud-module : rgba(54, 88, 209, 0.37);
       --background-button :  rgba(34, 139, 213, 0.6);
 
-      background-color: rgba(58, 58, 168, 0.33);;
+      background-color:  rgba(54, 88, 209, 0.17);;
     }

@@ -8,6 +8,9 @@ import { AuthModule } from './feature/auth/auth.module';
 import { CompanyModule } from './feature/company/company.module';
 import { CoreModule } from './core/core.module';
 
+
+import { ErrReducer } from './store/reducers/err.reducer';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -15,7 +18,7 @@ import { CoreModule } from './core/core.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({ err :  ErrReducer }),
     CoreModule,
     AuthModule,
     CompanyModule
