@@ -7,6 +7,7 @@ import { StoreModule } from '@ngrx/store';
 import { AuthModule } from './feature/auth/auth.module';
 import { CompanyModule } from './feature/company/company.module';
 import { CoreModule } from './core/core.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 import { ErrReducer } from './store/reducers/err.reducer';
@@ -19,6 +20,7 @@ import { ErrReducer } from './store/reducers/err.reducer';
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot({ err :  ErrReducer }),
+    HttpClientModule,
     CoreModule,
     AuthModule,
     CompanyModule

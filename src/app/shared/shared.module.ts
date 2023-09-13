@@ -12,6 +12,10 @@ import { ErrMessageComponent } from './components/err-message/err-message.compon
   ],
   imports: [
     CommonModule
+  ],
+  exports : [
+    ButtonComponent, 
+    ErrMessageComponent
   ]
 })
 export class SharedModule { }

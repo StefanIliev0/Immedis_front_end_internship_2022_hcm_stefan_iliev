@@ -5,6 +5,8 @@ header{
     justify-content:flex-start;
     color: var(--white);
     background-color: var(--backgroud-module);
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
 }
 .site-title{
     text-align: center;

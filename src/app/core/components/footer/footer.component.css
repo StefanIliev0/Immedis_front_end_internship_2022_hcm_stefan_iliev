@@ -1,6 +1,8 @@
 footer {
     padding: 2em 1em;
     background-color: var(--backgroud-module);
+    border-bottom-left-radius: 1em ;
+    border-bottom-right-radius: 1em ;
 }
 
 .owner {

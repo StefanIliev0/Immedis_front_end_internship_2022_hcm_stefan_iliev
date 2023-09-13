@@ -6,7 +6,7 @@ html{
     font : 16px/1.5 "Noto Sans" , sans-serif;
 }
 body{
-    background-color: rgb(243, 245, 250);
+    background-color:  rgba((91, 93, 99 , 0.20));
 }
 body, input, button, textarea, option, select, table, th, td {
     font:inherit;
@@ -37,7 +37,9 @@ a{
     text-decoration: none;
     color: black;
 }
-
+p {
+    cursor: default;
+}
 li, a {
     display: block;
 }
