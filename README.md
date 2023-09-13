@@ -1,0 +1,2 @@
+# Immedis_front_end_internship_2022_hcm_stefan_iliev
+ Human Capital Management App
