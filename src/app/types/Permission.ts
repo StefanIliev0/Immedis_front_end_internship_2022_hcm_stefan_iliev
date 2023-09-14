@@ -3,8 +3,9 @@
 export type Permission = {
     title : string ,
     can : {
-        read : boolean , 
-        edit : boolean , 
-        menage : boolean
+        read? : boolean , 
+        fill? : boolean , 
+        menage? : boolean,
+        admin? : boolean, 
     }
 }

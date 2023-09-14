@@ -8,6 +8,8 @@ import { AuthService } from '../../services/auth.service';
 import { UsersActions } from 'src/app/store/actions/user.actions';
 
 import { User } from 'src/app/types/User';
+import { CompanyStructure } from 'src/app/types/CompanyStruture';
+import { companyStructureActions } from 'src/app/store/actions/companyStructure.actions';
 
 
 @Component({
@@ -30,13 +32,16 @@ export class LoginComponent implements OnDestroy {
      return
     }
    
-    this.subscr$ =  this.service.loginUser(form.value["username"], form.value["password"]).subscribe( (res) => {
-      const user  = res as User;
+    this.subscr$ =  this.service.loginUser(form.value["email"], form.value["password"]).subscribe( (res : any) => {
+      const user  = res.user as User;
+      const companyStructure  = res.company as CompanyStructure[];
+
       this.store.dispatch(UsersActions.add({user}));
+      this.store.dispatch(companyStructureActions.add({structure : companyStructure}))
 
       const pathString = this.service.generatePath(user.permissions);
 
-      this.router.navigate([`company${pathString}`]);
+      this.router.navigate([pathString]); 
       }
     )
   }

@@ -5,12 +5,14 @@ import { Store } from '@ngrx/store';
 import { ErrActions } from 'src/app/store/actions/err.actions';
 import { Permission } from 'src/app/types/Permission';
 
+import { KEY_API } from 'src/app/constaints';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   
-  USER_BASIC_URI : string= `123/auth`;
+  AUTH_BASIC_URI : string= `${KEY_API}/auth`;
 
   constructor( private store : Store , private http : HttpClient) { }
 
@@ -21,15 +23,22 @@ export class AuthService {
     },3000)
   }
 
-  loginUser(username : string,  password : string ){
-    return this.http.post( `${this.USER_BASIC_URI}/login`, {username , password})
+  loginUser(email : string,  password : string ){
+    return this.http.post( `${this.AUTH_BASIC_URI}/login`, {email , password})
   }
 
   generatePath(permissions : Permission[]){
-    let pathString = ''; 
+    let pathString = `${permissions[0].title}/dashboard`; 
+    let isDone = false; 
+
 
     permissions.forEach(x => {
+      if(!isDone && x.title != permissions[0].title){
       pathString += `/${x.title}` ; 
+      }
+      if( !isDone && !(x.can.menage || x.can.admin || x.can.fill) ){
+        isDone = true ; 
+      }
     })
 
   return pathString
