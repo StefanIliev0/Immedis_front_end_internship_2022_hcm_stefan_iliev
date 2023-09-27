@@ -1,0 +1,11 @@
+<div class="container">
+    <app-aside></app-aside>
+    <div class="sub-container">
+        <div class="admin-menu">
+            <app-button [text]="'New Company'" (newEvent)="createNew()" />
+        </div>
+        <router-outlet></router-outlet>  
+    </div>  
+    </div>
+    
+    

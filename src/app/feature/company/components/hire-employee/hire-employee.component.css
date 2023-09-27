@@ -1,0 +1,15 @@
+:host { 
+    margin: 0 auto;
+    flex: 10 1 50em;
+}
+h2{
+    margin: 0.5em auto;
+    color: var(--white);
+    text-shadow: 0 0 10px rgba(0,0, 0, 0.8);
+    text-align: center;
+}
+.finish{
+    display: flex;
+    flex-direction: column;
+    align-items :center;
+}

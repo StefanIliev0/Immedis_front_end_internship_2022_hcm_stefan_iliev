@@ -1,38 +1,48 @@
 <div class="container">
-    <form  class="login-form" #form="ngForm" (ngSubmit)="login(form)">
-        <h1>Login</h1>
-        <label for="username">Email</label>
-        <input type="email"
-        name="email"
-        placeholder="Your email..."
-        id="email"
-        ngModel
-        #username="ngModel"
-        required 
-        email
-        >
+  <form class="login-form" #form="ngForm" (ngSubmit)="login(form)">
+    <h1>Login</h1>
+    <label for="username">Email</label>
+    <input
+      type="email"
+      name="email"
+      placeholder="Your email..."
+      id="email"
+      ngModel
+      #username="ngModel"
+      required
+      email
+    />
 
-        <ng-container *ngIf="username.touched">
-            <p class="error" *ngIf="username.errors?.['required']" > Email is required! </p>
-            <p class="error" *ngIf="!!username.errors?.['email']" > Email must be valid Email! </p>
-        </ng-container>
-        
-        <label for="password">Password</label>
-        <input type="password"
-        name="password" 
-        id="password-register"
-        placeholder="Your password..." 
-        ngModel
-        #password="ngModel"
-        required 
-        minlength="4"
-        >
+    <ng-container *ngIf="username.touched">
+      <p class="error" *ngIf="username.errors?.['required']">
+        Email is required!
+      </p>
+      <p class="error" *ngIf="!!username.errors?.['email']">
+        Email must be valid Email!
+      </p>
+    </ng-container>
 
-        <ng-container *ngIf="password.touched">
-            <p class="error" *ngIf="password.errors?.['required']" > Password is required! </p>
-            <p class="error" *ngIf="!!password.errors?.['minlength']" > Password must be a least 4 characters! </p>
-        </ng-container>
-        <app-err-message/>
-        <app-button [text]="'Login'"  />
-    </form>
+    <label for="password">Password</label>
+    <input
+      type="password"
+      name="password"
+      id="password-register"
+      placeholder="Your password..."
+      ngModel
+      #password="ngModel"
+      required
+      minlength="4"
+    />
+
+    <ng-container *ngIf="password.touched">
+      <p class="error" *ngIf="password.errors?.['required']">
+        Password is required!
+      </p>
+      <p class="error" *ngIf="!!password.errors?.['minlength']">
+        Password must be a least 4 characters!
+      </p>
+    </ng-container>
+    <app-err-message />
+    <app-button [text]="'Login'" [type]="'submit'" (newEvent)="login(form)" />
+  </form>
 </div>

@@ -1,0 +1,125 @@
+
+label { 
+    font-size: 1.1em;
+    margin-inline: 1em;
+    font-weight: bold;
+    font-style: italic;
+    display: flex;
+    flex: 1 1 10em;
+    align-self: center;
+}
+input {
+    flex: 4 1 10em;
+    border: none;
+    border-radius: 1em;
+    border-bottom: 0.1em dotted var(--field);
+    padding: 0.1em 0.3em;
+    background: var(--distributed_blue);
+    text-align: center;
+}
+input:focus{
+    outline: none;
+    background: transparent;
+}
+input:disabled{
+    outline: none;
+    background:  var(--distributed_gray);
+}
+input::placeholder{
+    font-size: 0.6em;
+    margin: 1em
+}
+input[type="checkbox"]  {
+    position: relative;
+    left: 0%;
+    top: 23%;
+    margin-inline: 0.5em;
+    width: 1.5em;
+    height: 1.5em;
+    accent-color: var(--field);
+    clip-path: circle(46% at 50% 50%);
+}
+select{
+    font-size: 1.2em;
+    width: fit-content;
+    padding: 0 0.6em;
+    border-radius: 0.4em;
+    appearance: none;
+    outline: none;
+    border: none;
+    border-bottom: 0.1em dotted var(--field);
+    background: var(--distributed_blue);
+}
+select:disabled {
+    background:  var(--distributed_gray);
+}
+select:focus{
+    outline: none;
+    background: transparent;
+}
+option {
+    /* background-color: transparent; */
+    box-shadow: 13px 13px 5px 0px rgba(0,0,0,0.75);
+}
+.one-line {
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+    border-radius: 1em;
+    width: 100%;
+    background:  var(--distributed_gray);
+    padding-bottom: 1em;
+}
+.line{
+    position: relative;
+    flex: 1 1 10em;
+    display: flex;
+    justify-content: center;
+}
+.select{
+    flex: 0.3 1 5em;
+    /* margin-right: auto; */
+}
+.form { 
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 2em;
+    background-color: transparent ;
+    align-items: center;
+    opacity: 0;
+    width: 100%;
+    animation: fade-in 1s ease-in-out forwards;
+}
+.error { 
+    position: absolute;
+    top: 100%;
+    left: 10%;
+    font-size: 0.8em;
+    margin: 0;
+    color: red;
+    opacity: 0;
+    animation: fade-in 1s ease-in-out forwards
+}
+.checkbox{
+    display: block;
+    font-weight: 400;
+    font-size: 0.8em;
+    margin: 0;
+}
+.button {
+    margin-inline: 13em;
+}
+.err{
+    color: red;
+    opacity: 0;
+    animation: fade-in 1s ease-in-out forwards
+}
+@keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }

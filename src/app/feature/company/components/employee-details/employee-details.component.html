@@ -1,0 +1,11 @@
+<div class="container">
+<h1>Employee details</h1>
+<div class="routes">
+    <app-button [text]="'Information'" (newEvent)="goTo('information')"  [disabled]="pathEnd == 'information' ? true : false"/>
+    <app-button [text]="'Contracts'" (newEvent)="goTo('contracts')"  [disabled]="pathEnd == 'contracts' ? true : false"/>
+    <app-button [text]="'Payslips'" (newEvent)="goTo('payslips')"  [disabled]="pathEnd == 'payslips' ? true : false"/>
+</div>
+<router-outlet></router-outlet>
+</div>
+
+

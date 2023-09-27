@@ -1,17 +1,17 @@
 import { createReducer, on } from '@ngrx/store';
 
 
-import { CompanyStructure } from 'src/app/types/CompanyStruture';
+import { CompanySubstructure } from 'src/app/types/CompanyStruture';
 import { companyStructureActions } from '../actions/companyStructure.actions';
 
 
 
 
 
-export const initialState : CompanyStructure[] | [] = [] ;
+export const initialState : CompanySubstructure   =  [] ;
 
-export const userReducer = createReducer(
+export const companyStructureReducer = createReducer(
   initialState,
-  on(companyStructureActions.add , (_state , {structure}) => structure ), 
+  on(companyStructureActions.add , (_state , {structure}) => structure  ), 
   on(companyStructureActions.remove, (_state) => initialState ) 
 ); 

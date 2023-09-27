@@ -1,0 +1,21 @@
+<ng-container *ngIf="!routeData">
+  <app-spiner />
+</ng-container>
+
+<ng-container *ngIf="!!routeData">
+  <div class="nav" *ngIf="maxIndex > 0">
+    <app-button
+      [text]="'-'"
+      (newEvent)="changeIndex('negative')"
+      *ngIf="index > 0"
+    />
+    <div class="index">
+      <p>{{ index + 1 }}</p>
+    </div>
+    <app-button
+      [text]="'+'"
+      (newEvent)="changeIndex('positive')"
+      *ngIf="index < maxIndex"
+    />
+  </div>
+</ng-container>

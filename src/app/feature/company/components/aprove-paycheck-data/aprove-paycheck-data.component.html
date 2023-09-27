@@ -1,0 +1,38 @@
+<h1>Paychecks</h1>
+<ng-container *ngIf="table.length == 0">
+    <app-spiner></app-spiner>
+</ng-container>
+<ng-container *ngIf="table.length >  0">
+    <table>
+        <thead>
+            <tr>
+                <th>Empoyee ID</th>
+                <th>Position</th>
+                <th>Name</th>
+                <th>Overtime in hours</th>
+                <th>Holiday overtime in hours</th>
+                <th>Unpaid hours</th>
+                <th>Monthly bonus in percentage</th>
+                <th>Sick leave in days</th>
+                <th>Annual leave in days</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let empl of table; index as index">
+                <td [ngClass]="{'row': cursorPosition.startsWith(index.toString()) ,'pos' : cursorPosition.endsWith('0'), 'id' : true }"  (mouseenter)="changeCursorPosition (index , 0)">{{empl["id"]}}</td>
+                <td [ngClass]="{'row': cursorPosition.startsWith(index.toString()) ,'pos' : cursorPosition.endsWith('1') }" (mouseenter)="changeCursorPosition (index , 1)">{{empl["position"]}}</td>
+                <td [ngClass]="{'row': cursorPosition.startsWith(index.toString()) ,'pos' : cursorPosition.endsWith('2') }" (mouseenter)="changeCursorPosition (index , 2)">{{empl["name"]}}</td>
+                <td [ngClass]="{'row': cursorPosition.startsWith(index.toString()) ,'pos' : cursorPosition.endsWith('3') }" (mouseenter)="changeCursorPosition (index , 3)">{{empl["overtimeHours"]}}</td>
+                <td [ngClass]="{'row': cursorPosition.startsWith(index.toString()) ,'pos' : cursorPosition.endsWith('4') }" (mouseenter)="changeCursorPosition (index , 4)">{{empl["overtimeHolydaysHour"]}}</td>
+                <td [ngClass]="{'row': cursorPosition.startsWith(index.toString()) ,'pos' : cursorPosition.endsWith('5') }" (mouseenter)="changeCursorPosition (index , 5)">{{empl["unpaidHours"]}}</td>
+                <td [ngClass]="{'row': cursorPosition.startsWith(index.toString()) ,'pos' : cursorPosition.endsWith('6') }" (mouseenter)="changeCursorPosition (index , 6)">{{empl["bonus"]}}</td>
+                <td [ngClass]="{'row': cursorPosition.startsWith(index.toString()) ,'pos' : cursorPosition.endsWith('7') }" (mouseenter)="changeCursorPosition (index , 7)">{{empl["sickLeaveDays"]}}</td>
+                <td [ngClass]="{'row': cursorPosition.startsWith(index.toString()) ,'pos' : cursorPosition.endsWith('8') }" (mouseenter)="changeCursorPosition (index , 8)">{{empl["anualLeaveDays"]}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="buttons">
+        <app-button [text]="'Approve'" (newEvent)="submit()" />
+        <app-button [text]="'Back'" (newEvent)="back()" />
+    </div>
+</ng-container>

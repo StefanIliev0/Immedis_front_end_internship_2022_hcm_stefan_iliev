@@ -1,1 +1,198 @@
-<p>dashboard works!</p>
+<div class="container">
+  <h1>Dashboard</h1>
+  <ng-container *ngIf="!table">
+    <app-spiner></app-spiner>
+  </ng-container>
+  
+  <ng-container *ngIf="table">
+    <div class="tableHeader">
+      <div class="heading">
+        <h3>{{ table.current.name }} {{ table.current.title }}</h3>
+      </div>
+      <div class="payment">
+        <p *ngIf="permission['write'] || permission['admin']">Total payments</p>
+        <p *ngIf="permission['write'] || permission['admin']">
+          {{ table.current.totalPayment }} $
+        </p>
+      </div>
+      <div class="payment">
+        <p *ngIf="permission['write'] || permission['admin']">
+          Total payments to employees
+        </p>
+        <p *ngIf="permission['write'] || permission['admin']">
+          {{ table.current.grossSalaryPayment }} $
+        </p>
+      </div>
+    </div>
+    <div class="tableEmployees">
+      <div class="heading">
+        <div class="element">
+          <h3>Employees</h3>
+        </div>
+        <div class="button">
+          <app-button [text]="'New employee'" (newEvent)="hire()"></app-button>
+          <app-button
+            *ngIf="pathArr.length == 1 && permission['admin'] && !table.thisMounthAproved"
+            [text]="'Approve monthly paychecks'"
+            (newEvent)="AprovePaychecks()"
+          ></app-button>
+        </div>
+      </div>
+      <div class="empl" *ngIf="table.employes.length > 0">
+        <div class="first">
+          <p>Employee ID</p>
+        </div>
+        <div>
+          <p class="position">Position</p>
+        </div>
+        <div>
+          <p class="name">Name</p>
+        </div>
+        <div>
+          <p class="grossSalaryPayment">Total payment</p>
+        </div>
+        <div class="last">
+          <p class="totalPayment last">Total payments to employee</p>
+        </div>
+      </div>
+      <ng-container *ngFor="let empl of table.employes; index as index">
+        <div class="empl">
+          <div
+            class="clickable"
+            (click)="showEmpOptions[index] = !showEmpOptions[index]"
+          >
+            <p class="id clickable">{{ empl.id }}</p>
+          </div>
+          <div>
+            <p class="position" *ngIf="!showEmpOptions[index]">
+              {{ empl.position }}
+            </p>
+            <app-button
+              class="button"
+              (newEvent)="changePosition(empl.id)"
+              [text]="'Change'"
+              *ngIf="
+                showEmpOptions[index] &&
+                (permission['manege'] || permission['admin'])
+              "
+            ></app-button>
+          </div>
+          <div>
+            <p class="name" *ngIf="!showEmpOptions[index]">{{ empl.name }}</p>
+            <app-button
+              class="button"
+              (newEvent)="ShowDetails(empl.id)"
+              [text]="'Show details'"
+              *ngIf="
+                showEmpOptions[index] &&
+                (permission['manege'] ||
+                  permission['admin'] ||
+                  permission['write'] ||
+                  permission['fill'])
+              "
+            ></app-button>
+          </div>
+          <div>
+            <p
+              class="grossSalaryPayment"
+              *ngIf="
+                !showEmpOptions[index] &&
+                (permission['fill'] ||
+                  permission['admin'] ||
+                  permission['write'])
+              "
+            >
+              {{ empl.totalPayment }} $
+            </p>
+            <app-button
+              class="button"
+              [text]="'Fill paycheck'"
+              (newEvent)="showFillTable(index, empl.lastPayCheck)"
+              *ngIf="
+                showEmpOptions[index] &&
+                (permission['fill'] || permission['admin'])
+              "
+            ></app-button>
+          </div>
+          <div>
+            <p
+              class="totalPayment"
+              *ngIf="
+                !showEmpOptions[index] &&
+                (permission['write'] ||
+                  permission['admin'] ||
+                  permission['fill'])
+              "
+            >
+              {{ empl.grossSalaryPayment }} $
+            </p>
+            <app-button
+              class="button"
+              [text]="'Release'"
+              *ngIf="
+                showEmpOptions[index] &&
+                (permission['manege'] || permission['admin'])
+              "
+              (newEvent)="showReleseForm(index, empl.endDate, empl.name)"
+            ></app-button>
+          </div>
+        </div>
+
+        <div [@dropDownMenu]="showTableObject[index] ? 'open' : 'close'">
+          <app-dynamic-form
+            [fromModel]="tableForm"
+            (getFormValue)="formValues = $event"
+            (onSubmit)="submitPaycheck(index, empl.id)"
+          ></app-dynamic-form>
+        </div>
+        <div [@dropDownMenu]="showReleaseObject[index] ? 'open' : 'close'">
+          <app-dynamic-form
+            [fromModel]="tableForm"
+            (getFormValue)="formValues = $event"
+            (onSubmit)="submitReleseForm(empl.id)"
+          ></app-dynamic-form>
+        </div>
+      </ng-container>
+    </div>
+    <div class="substuctures" *ngIf="table.substructures.length > 0">
+      <div class="subsHeader">
+        <h3>Substructures</h3>
+      </div>
+      <ng-container *ngFor="let str of table.substructures">
+        <div class="struct clickable" (click)="navigate(str.name)">
+          <div class="heading">
+            <h4 class="clickable">{{ str.name }}</h4>
+          </div>
+          <div class="payment">
+            <p
+              class="clickable"
+              *ngIf="permission['write'] || permission['admin']"
+            >
+              Total payments
+            </p>
+            <p
+              class="clickable"
+              *ngIf="permission['write'] || permission['admin']"
+            >
+              {{ str.totalPayment }} $
+            </p>
+          </div>
+          <div class="payment">
+            <p
+              class="clickable"
+              *ngIf="permission['write'] || permission['admin']"
+            >
+              Total payments to employees
+            </p>
+            <p
+              class="clickable"
+              *ngIf="permission['write'] || permission['admin']"
+            >
+              {{ str.grossSalaryPayment }} $
+            </p>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>

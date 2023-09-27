@@ -1,0 +1,51 @@
+<form [formGroup]="form" class="form" (ngSubmit)="submit()">
+    <div class="one-line" *ngFor="let fields of fieldGroups">
+        <div *ngFor="let field of fields" class="line">
+            <ng-container [ngSwitch]="field.type">
+            <ng-container *ngSwitchCase="'input'">
+                <label *ngIf="field.label" >{{field.label}}</label>   
+                <input  [type]="field.kind || 'text'" [formControlName]="field.controlName || '' " (blur)="sendValue()" [placeholder]="field.placeholder || ''  "/>
+                
+               <ng-container *ngIf="form.controls[field.controlName || ''].invalid && (form.controls[field.controlName || ''].touched)" >
+                    <p class="error" *ngIf="!(!form.controls[field.controlName || ''].errors?.['required'])">{{field.label || field.errLabel}} is required.</p>
+                    <p class="error" *ngIf="!(!form.controls[field.controlName || ''].errors?.['minlength'])">{{field.label || field.errLabel}} length must be more than {{form.controls[field.controlName || ''].errors?.['minlength'].requiredLength - 1 }} characters.</p>
+                    <p class="error" *ngIf="!(!form.controls[field.controlName || ''].errors?.['maxlength'])">{{field.label || field.errLabel}} length must be less than {{form.controls[field.controlName || ''].errors?.['maxlength'].requiredLength + 1}} characters.</p>
+                    <p class="error" *ngIf="!(!form.controls[field.controlName || ''].errors?.['min'])">{{field.label || field.errLabel}}  must be a number bigger than {{form.controls[field.controlName || ''].errors?.['min'].min - 1}} .</p>
+                    <p class="error" *ngIf="!(!form.controls[field.controlName || ''].errors?.['max'])">{{field.label || field.errLabel}}  must be a number less than {{form.controls[field.controlName || ''].errors?.['max'].max + 1}} .</p>
+                    <p class="error" *ngIf="!(!form.controls[field.controlName || ''].errors?.['pattern'])">{{field.label || field.errLabel}}  must match the given template - {{form.controls[field.controlName || ''].errors?.['pattern'].requiredPattern}} .</p>
+                </ng-container> 
+            </ng-container>
+            <ng-container *ngSwitchCase="'select'">
+                <label class="select" *ngIf="field.label">{{field.label}}:</label>
+                <select [formControlName]="field.controlName || '' " (change)="sendValue()">
+                    <option *ngFor="let option of field.options" [value]="option.value">
+                        {{option.label}}
+                    </option>
+                </select>
+            </ng-container>
+            <ng-container *ngSwitchCase="'checkbox'">
+                <div>
+                    <label class="checkbox" *ngIf="field.label">
+                    {{ field.label }}
+                    <input
+                            type="checkbox"
+                            [name]="field.controlName"
+                            [formControlName]="field.controlName || '' "
+                            (change)="sendValue()"
+                    />
+                    </label>
+                </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="'button'">
+                <div class="button">
+                    <app-button [text]="field.label" (newEvent)="submit()" [type]="'submit'" />
+                </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="'header'">
+              <h4>{{field.label}}</h4>
+            </ng-container>
+            </ng-container>
+        </div>
+    </div>    
+    <p *ngIf="err" class="err">All fields of the form must be filled in correctly</p>
+</form>

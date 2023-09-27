@@ -3,5 +3,7 @@
       --white: rgb(255, 255,255);
       --backgroud-module : rgba(9, 59, 239 , 0.33);
       --background-button :  rgba(34, 139, 213, 0.6);
-
+      --field : rgb(103 136 255 / 61%);
+      --distributed_blue : linear-gradient(0deg,rgb(103 136 255 / 61%) 0.4%,rgba(2,0,36,0) 60% );
+      --distributed_gray : linear-gradient(0deg,rgba(78, 76, 112, 0.248) 0.4%,rgba(2,0,36,0) 60% );
     }

@@ -1,49 +1,51 @@
-import { Component , OnDestroy} from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import {NgForm} from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
 import { UsersActions } from 'src/app/store/actions/user.actions';
 
 import { User } from 'src/app/types/User';
-import { CompanyStructure } from 'src/app/types/CompanyStruture';
-import { companyStructureActions } from 'src/app/store/actions/companyStructure.actions';
-
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnDestroy {
-  
-  subscr$: Subscription = new Subscription;
+  subscr$: Subscription = new Subscription();
 
+  constructor(
+    private service: AuthService,
+    private store: Store<{ user: any }>,
+    private router: Router
+  ) {}
 
-  constructor(private service : AuthService , private  store : Store<{user : any}>, private router : Router){
-  }
-  
-  async login(form : NgForm){
-
-    if(form.invalid ){
+  async login(form: NgForm) {
+    if (form.invalid) {
       this.service.addErr("Sorry , but something in your fields isn't right.");
-     return
+      return;
     }
-   
-    this.subscr$ =  this.service.loginUser(form.value["email"], form.value["password"]).subscribe( (res : any) => {
-      const user  = res.user as User;
-      const companyStructure  = res.company as CompanyStructure[];
 
-      this.store.dispatch(UsersActions.add({user}));
-      this.store.dispatch(companyStructureActions.add({structure : companyStructure}))
-
-      const pathString = this.service.generatePath(user.permissions);
-
-      this.router.navigate([pathString]); 
-      }
-    )
+    this.subscr$ = this.service
+      .loginUser(form.value['email'], form.value['password'])
+      .subscribe((res: any) => {
+        const user = res.user as User;
+        this.store.dispatch(UsersActions.add({ user }));
+        const { isHavePermisions, pathString, companyName } =
+          this.service.generatePath(user.permissions);
+        if (user.isNewEmpl) {
+          this.router.navigate([`auth/change_password`]);
+          return;
+        }
+        if (isHavePermisions) {
+          this.router.navigate([pathString]);
+        } else {
+          this.router.navigate([`${companyName}/profile/${user._id}`]);
+        }
+      });
   }
   ngOnDestroy(): void {
     this.subscr$.unsubscribe();

@@ -1,0 +1,14 @@
+<div class="container">
+  <h2>Make new contract</h2>
+  <ng-container *ngIf="!form">
+    <app-spiner/>
+  </ng-container>
+  
+  <ng-container *ngIf="form">
+    <app-dynamic-form
+      [fromModel]="form"
+      (getFormValue)="getFormValue($event)"
+      (onSubmit)="sendContract()"
+    ></app-dynamic-form>
+  </ng-container>
+</div>

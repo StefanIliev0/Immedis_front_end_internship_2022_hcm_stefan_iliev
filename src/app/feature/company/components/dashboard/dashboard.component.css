@@ -1,0 +1,104 @@
+:host { 
+    margin: 0 auto;
+    flex: 10 1 50em;
+}
+
+.container{
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 1em;
+}
+h1{
+    color: var(--white);
+    text-shadow: 0 0 10px rgba(0,0, 0, 0.8);
+}
+.id{
+    font-size: 0.8em;
+}
+.tableHeader , .struct   {
+    display: flex;
+    gap: 3em;
+    justify-content: center;
+    padding: 1em;
+    border-radius: 1em;
+    background: linear-gradient(0deg,var(--field) 0.4%,rgba(2,0,36,0) 60% );
+    margin-block: 1em;
+    width: 100%;
+}
+.struct .heading {
+    margin-right: auto ;
+}
+.substuctures {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 1em;
+    border-radius: 1em;
+    background: linear-gradient(0deg,rgba(78, 76, 112, 0.248) 0.4%,rgba(2,0,36,0) 60% );
+    margin-block: 1em;
+    width: 100%;
+}
+.substuctures > div {
+    display: flex;
+    gap: 3em;
+    padding: 1em;
+    margin: 0;
+
+}
+.tableHeader  div  {
+    flex: 1 1 20em;
+}
+
+.tableHeader div p , .substuctures div p  {
+    font-weight: 500;
+    font-size: 1.2em;
+    text-align: center;
+}
+.tableEmployees{
+    display: flex;
+    flex-direction: column;
+    /* background-color: var(--field); */
+    background: linear-gradient(0deg,rgba(78, 76, 112, 0.248) 0.4%,rgba(2,0,36,0) 60% );
+    width: 100%;
+    border-radius: 1em;
+    padding-bottom: 2em;
+}
+.tableEmployees .heading{ 
+    padding: 2em;
+    display: flex;
+}
+.heading div.element {
+    flex: 1 1 20em;
+}
+.button {
+    display: flex;
+    margin-left: auto;
+    font-size: 0.8em;
+    align-items: center;
+    gap: 2em;
+}
+.tableEmployees .empl{ 
+    padding: 0.2em 3em;
+    display: flex;
+    width: 100%;
+
+}
+.tableEmployees .empl div { 
+    flex: 0 1 15em;
+    text-align: center;
+    background: linear-gradient(0deg,var(--field) 0.4%,rgba(2,0,36,0) 60% );
+    border-radius: 0.5em;
+    margin: 0.1em;
+    padding: 0.8em;
+}
+/* .first {
+    border-top-left-radius: 1em;
+}
+.last{
+    border-top-right-radius: 1em;
+} */
+.clickable { 
+    cursor: pointer;
+}

@@ -1,4 +1,4 @@
-@media (width <= 600px){
+@media (width <= 900px){
 
  
 html{
@@ -6,3 +6,11 @@ html{
 }   
 
 }
+@media (width <= 600px){
+
+ 
+    html{
+        font : 9px/1.5 "Noto Sans" , sans-serif;
+    }   
+    
+    }

@@ -1,0 +1,16 @@
+<ng-container  *ngIf="form.length == 0"> 
+<app-spiner/>
+</ng-container>
+
+<ng-container *ngIf="form.length > 0">
+<div class="nav" *ngIf="maxIndex > 0">
+    <app-button [text]="'-'" (newEvent)="changeIndex('negative')" *ngIf="index > 0"/>
+    <div class="index">
+        <p>{{index + 1}}</p>
+    </div>
+    <app-button [text]="'+'" (newEvent)="changeIndex('positive')" *ngIf="index < maxIndex"/>
+</div>
+<app-dynamic-form [fromModel]="form" (getFormValue)="formValues = $event" (onSubmit)="edit ? updateData($event) : setEdit() "></app-dynamic-form>   
+</ng-container>
+
+

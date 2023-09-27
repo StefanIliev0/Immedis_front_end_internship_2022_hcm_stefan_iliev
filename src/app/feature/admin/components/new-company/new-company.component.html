@@ -1,0 +1,33 @@
+<div class="container">
+  <ng-container *ngIf="generalProcess < 2">
+    <app-dynamic-form
+      [fromModel]="basicCompanyInfoModel"
+      (getFormValue)="basicCompanyInfo = $event"
+      (onSubmit)="onNext(1)"
+    />
+  </ng-container>
+  <ng-container *ngIf="generalProcess == 1">
+    <app-dynamic-form
+      [fromModel]="compStructureTitlesModel"
+      (getFormValue)="getSruct($event)"
+      (onSubmit)="onNext(2)"
+    />
+  </ng-container>
+  <ng-container *ngIf="generalProcess == 2">
+    <app-dynamic-form
+      [fromModel]="formModel"
+      (getFormValue)="getStruData($event)"
+      (onSubmit)="AddElement()"
+    />
+    <div class="button">
+      <app-button [text]="'Next'" (newEvent)="onNextProcess()"></app-button>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="generalProcess == 3">
+    <app-dynamic-form
+      [fromModel]="ruleFormModel"
+      (getFormValue)="getRuleData($event)"
+      (onSubmit)="SubmitData()"
+    />
+  </ng-container>
+</div>

@@ -1,1 +1,25 @@
-<p>aside works!</p>
+<ul class="container">
+  <ng-container *ngFor="let p of path; index as index">
+    <ng-container *ngIf="p.length == 1">
+      <li
+        (click)="
+          index == startArr.length - 1 ? navigate(p[index], index) : index
+        "
+      >
+        <p>{{ p.slice(-1)[0] }}</p>
+      </li>
+    </ng-container>
+    <ng-container *ngIf="p.length > 1">
+      <li class="main">
+        <p (click)="extend[index] = !extend[index]">{{ p.slice(-1)[0] }}</p>
+      </li>
+    </ng-container>
+    <div [@dropDownMenu]="extend[index] ? 'open' : 'close'">
+      <ng-container *ngFor="let name of filterName(p, p[p.length - 1])">
+        <li class="subs" (click)="navigate(name, index)">
+          <p>{{ name }}</p>
+        </li>
+      </ng-container>
+    </div>
+  </ng-container>
+</ul>

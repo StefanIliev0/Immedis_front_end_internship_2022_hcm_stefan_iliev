@@ -1,0 +1,19 @@
+<div class="container">
+  <h2>Hire new employee</h2>
+  <ng-container *ngIf="!form">
+    <app-spiner/>
+  </ng-container>
+  
+  <ng-container *ngIf="form">
+    <app-dynamic-form
+      [fromModel]="form"
+      (getFormValue)="getFormValue($event)"
+      (onSubmit)="sendEmpl()"
+    ></app-dynamic-form>
+    <div class="finish">
+    <app-err-message/>
+    <app-button [text]="'Confirm'" (newEvent)="isReady()" />
+    </div>
+
+  </ng-container>
+</div>

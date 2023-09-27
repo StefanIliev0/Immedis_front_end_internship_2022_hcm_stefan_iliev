@@ -1,0 +1,17 @@
+.container{
+    display: flex;
+}
+.sub-container{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.admin-menu{
+    display: flex;
+    justify-content: flex-end;
+    gap: 2em;
+    padding : 1em 3em;
+}
+app-aside{
+    flex: 0 0 22em;
+}

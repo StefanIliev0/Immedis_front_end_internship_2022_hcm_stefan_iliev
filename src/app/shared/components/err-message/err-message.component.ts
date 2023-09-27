@@ -8,9 +8,9 @@ import { selectErr } from 'src/app/store/selectors/err.selector';
   styleUrls: ['./err-message.component.css']
 })
 export class ErrMessageComponent {
-
-  err = this.store.select(selectErr); 
+  err  = this.store.select(selectErr)
   constructor(private store : Store<{err : string}>){
-  
   }
+
+
 }

@@ -7,13 +7,29 @@ button{
     margin: 0em auto;
     text-align: center;
     font-weight: bold;
-    width: 8em;
+    width: 9em;
     transition: color 0.3s ease-in-out,border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    opacity: 0;
+    animation: fade-in 1s ease-in-out forwards
 
 }
+
 button:hover{
     cursor: pointer;
     color: var(--background-button);
     background-color: var(--white);
     border-color: var(--background-button);
+    transition: color 0.7s ease-in-out, background-color 0.5s ease-in-out,  border-color 0.5s ease-in-out ;
 }
+button:disabled {
+    background-color:grey ;
+  }
+
+@keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }

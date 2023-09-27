@@ -1,0 +1,35 @@
+:host { 
+    margin: 0 auto;
+    flex: 10 1 50em;
+}
+h1{
+    text-align: center;
+    color: var(--white);
+    text-shadow: 0 0 10px rgba(0,0, 0, 0.8);
+}
+table {
+    border-collapse: collapse;
+    margin: 3em 1em;
+    overflow: hidden;
+}
+th , td {
+    cursor: default;
+    padding: 0.1em 0.4em;
+    text-align: center;
+    border: 0.1em solid var(--backgroud-module); 
+}
+.row {
+    background-color: rgba(78, 76, 112, 0.248);
+}
+.pos{
+    background-color: rgba(78, 76, 112, 0.248);
+}
+.id{
+    font-size: 0.8em;
+}
+.buttons{
+    display: flex;
+    justify-content: center;
+    gap: 4em;
+    margin: 2em auto
+}

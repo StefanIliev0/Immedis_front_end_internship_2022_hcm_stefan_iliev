@@ -8,9 +8,16 @@ import { Component, Output,Input,EventEmitter } from '@angular/core';
 export class ButtonComponent {
   @Output() newEvent = new EventEmitter();
   @Input() text?: string; 
-  
+  @Input() type? : string;
+  @Input() disabled = false;
 
-  onClick():void {
+  onClick(e : Event):void {
+    e.preventDefault();
+    e.stopPropagation();
   this.newEvent.emit();
+  this.disabled = true ; 
+  setTimeout(() => {
+    this.disabled = false;
+  },2000 )
   }
 }
