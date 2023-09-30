@@ -15,6 +15,7 @@ import { User } from 'src/app/types/User';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnDestroy {
+  // set subscriptions 
   subscr$: Subscription = new Subscription();
 
   constructor(
@@ -25,13 +26,16 @@ export class LoginComponent implements OnDestroy {
 
   async login(form: NgForm) {
     if (form.invalid) {
+      // if forms is invalid - show message 
       this.service.addErr("Sorry , but something in your fields isn't right.");
       return;
     }
+    // if is valid send request to server
     this.subscr$ = this.service
       .loginUser(form.value['email'], form.value['password'])
       .subscribe((res: any) => {
         const user = res.user as User;
+        // add user to Store and generate path to redirect 
         this.store.dispatch(UsersActions.add({ user }));
         const { isHavePermisions, pathString, companyName } =
           this.service.generatePath(user.permissions);

@@ -12,6 +12,7 @@ import { selectUser } from 'src/app/store/selectors/user.selectors';
   styleUrls: ['./change-password.component.css'],
 })
 export class ChangePasswordComponent implements OnInit, OnDestroy {
+  // init subscriptions 
   subscr$: Subscription = new Subscription();
   user$: Subscription = new Subscription();
 
@@ -26,8 +27,10 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
   ngOnInit(): void {
+    // get user 
     this.user$ = this.store.select(selectUser).subscribe((x) => {
       let user = x;
+      // set variables via auth service based to permissions of user 
       let { isHavePermisions, pathString, companyName } =
         this.service.generatePath(user.permissions);
       this.isHavePermisions = isHavePermisions;
@@ -38,13 +41,15 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
   }
   async changePassword(form: NgForm) {
     if (form.invalid) {
+      // if form is invalid set Message 
       this.service.addErr("Sorry , but something in your fields isn't right.");
       return;
     }
-
+    // send new password to server 
     this.subscr$ = this.service
       .changePassword(this.userId, this.companyName, form.value['password'])
       .subscribe((res: any) => {
+        // on positive response navigate to correct path
         if (this.isHavePermisions) {
           this.router.navigate([this.pathString]);
         } else {
@@ -53,6 +58,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       });
   }
   ngOnDestroy(): void {
+    // unsubscribe subscriptions 
     this.subscr$.unsubscribe();
     this.user$.unsubscribe();
   }

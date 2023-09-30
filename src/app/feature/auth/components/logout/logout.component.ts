@@ -13,6 +13,7 @@ export class LogoutComponent implements OnInit {
 
   constructor(private store : Store , private router : Router){}
   ngOnInit(): void {
+    // Cleaning data from Store and redirect
       this.store.dispatch(UsersActions.remove());
       this.store.dispatch(companyStructureActions.remove());
       this.router.navigate([`/`]);

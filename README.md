@@ -27,9 +27,7 @@ The personal profile has the following features depending on the permissions:
 ## Contents
 1. [Startup](#startup)
 2. [Modules](#modules)
-3. [Guards](#guards)
-4. [Interseptors](#interseptors)
-5. [Store](#store)
+3. [Store](#store)
 
 
 ## Startup 
@@ -174,6 +172,74 @@ This is a two-method service that accepts an array of form objects and returns t
 
 ### Auth Module 
 
-### Admin Module 
+#### Components 
+
+##### Auth component 
+
+It is a simple component that serves as a container for the other components in the module.
+
+##### Change password component 
+
+###### Responsibilities 
+
+This component should render a view that holds a form, the acceptance of which will change the password of the corresponding user.
+
+###### Dependencies
+
+
+Uses `Store` , `Router` and `AuthService` obtained through the constructor function.
+
+###### Workflow 
+
+During initialization, it takes the data of the specific user from the Store and saves variables to help it redirect after the submission of the form. Upon submission, it checks whether the two passwords are available and the same. If so, it sends a password change request to the server and redirects the user according to his permissions. When removed, the component is unsubscribed.
+
+##### Login component 
+
+###### Responsibilities 
+
+This component must render a view that contains a form whose acceptance logs the user.
+
+###### Dependencies
+
+
+Uses `Store` , `Router` and `AuthService` obtained through the constructor function.
+
+###### Workflow 
+
+When sending, it checks whether the data is correct. If so, it sends a user login request to the server. If it receives a negative response, it displays the error as a message, if it receives a positive response, it saves the user in the Store, generates the redirect paths and redirects the user to the correct page. When it is removed, the component is unsubscribed.
+
+
+##### Logout component 
+
+This is a simple component that serves to clear the data for the user. After clearing the data from the Store, it redirects the user to the login page.
+
+#### Services 
+
+##### Auth Service 
+
+###### Methods 
+
+1. `addErr` - adds error message to Error store 
+
+2. `loginUser` - sends a request to the backend server to log in the user.
+
+3. `changePassword` - sends a request to the backend server to change password for this user.
+
+4. `generatePath` - generates a primary path to redirect the user.
+
+5. `isAuth` - returs boolean observable for the presence of a user. 
+
+6. `navigateTohome` - redirects to home page.
+
+#### Routing module 
+
+The module contains one main path that has five children paths 
+
+1. Start Route - container route.
+    * login - shows Login page . 
+    * change_password - shows Change password page. 
+    * logout - execute logout page. 
+
+### Admin Module  
 
 ### Company Module

@@ -93,6 +93,9 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       this.l5,
       this.l6,
     ].filter((x) => x != '' && x != undefined);
+    if(this.pathArr.length == 0) {
+      this.pathArr.push("admin")
+    }
     this.store.dispatch(PathActions.add({ path: this.pathArr }));
     this.permissionsArr = (
       await firstValueFrom(this.store.select(selectUser))
