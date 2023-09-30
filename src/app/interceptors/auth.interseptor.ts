@@ -5,8 +5,7 @@ import { User } from "../types/User";
 import { selectIsAuth , selectUser } from "../store/selectors/user.selectors";
 import { Injectable, Provider } from "@angular/core";
 import { ErrActions } from "../store/actions/err.actions";
-import { KEY_API } from "../constaints";
-import { Router } from "@angular/router";
+import { environment } from "src/environments/environment";
 
 @Injectable()
 
@@ -14,7 +13,7 @@ export class AuthInterceptor implements HttpInterceptor{
     user : User | {} = {} ;
     isAuth : boolean  = false;
 
-    constructor(private store : Store<{user : User , err : string}>, private router : Router){
+    constructor(private store : Store<{user : User , err : string}>){
     }
 
 
@@ -26,7 +25,7 @@ export class AuthInterceptor implements HttpInterceptor{
             this.isAuth = res; 
         })
         let request = req; 
-        if(this.isAuth && req.url.startsWith(KEY_API)){
+        if(this.isAuth && req.url.startsWith(environment.KEY_API)){
             this.store.dispatch(ErrActions.remove());
             const HcmToken = (this.user as User).HcmToken ;
             
@@ -34,9 +33,7 @@ export class AuthInterceptor implements HttpInterceptor{
               setHeaders: {
                 HcmToken: HcmToken
             }
-        })}else{
-          this.router.navigate([`/`]); 
-        }
+        })}
         
       return  next.handle(request).pipe(
         catchError((err) => {

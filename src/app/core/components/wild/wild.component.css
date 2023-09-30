@@ -1,0 +1,11 @@
+.message { 
+    margin: 4em auto;
+    text-align: center;
+}
+p{
+    font-size: 1.3em;
+}
+span {
+    color: var(--background-button);
+    cursor: pointer;
+}

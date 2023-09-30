@@ -21,7 +21,7 @@ export class AdminService {
   }
   //return Observable for creating new company
   createCompany(compObj: any) {
-    return this.backEnd.post('admin/create_company', compObj);
+    return this.backEnd.post('company/create_company', compObj);
   }
   //formating final companyObj
   formatCompanyObj(

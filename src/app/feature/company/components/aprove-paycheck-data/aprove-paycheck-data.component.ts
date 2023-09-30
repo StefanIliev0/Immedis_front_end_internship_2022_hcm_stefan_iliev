@@ -22,7 +22,6 @@ constructor(private service : CompanyService , private router : Router, private 
 ngOnInit(): void {
   this.table$ = this.service.getPaychecks(this.company).subscribe(x => {
     this.table = x as {[key:string] : string}[];
-    console.log(x)
   })
 }
 submit(){

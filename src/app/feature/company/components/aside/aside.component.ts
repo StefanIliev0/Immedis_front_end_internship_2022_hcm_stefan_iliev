@@ -20,6 +20,7 @@ export class AsideComponent implements OnInit, OnDestroy {
   path: string[][] = [];
   startArr: string[][] = [];
   newPath: string[] = [];
+  isHavePermissions : boolean = false; 
 
   extend: { [key: number]: boolean } = {};
 
@@ -35,7 +36,9 @@ export class AsideComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.permissions$ = this.store.select(selectUser).subscribe((y) => {
-      this.startArr = this.service.generatePathArr(y.permissions);
+      let {start , permissions } = this.service.generatePathArr(y.permissions);
+      this.startArr = start ; 
+      this.isHavePermissions = permissions
     });
     this.path$ = this.store.select(selectPath).subscribe((y) => {
       this.newPath = y;

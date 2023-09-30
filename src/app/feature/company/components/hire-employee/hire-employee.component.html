@@ -10,7 +10,7 @@
       (getFormValue)="getFormValue($event)"
       (onSubmit)="sendEmpl()"
     ></app-dynamic-form>
-    <div class="finish">
+    <div class="finish" *ngIf="ready">
     <app-err-message/>
     <app-button [text]="'Confirm'" (newEvent)="isReady()" />
     </div>

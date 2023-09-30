@@ -1,8 +1,8 @@
-<ng-container *ngIf="!routeData">
+<ng-container *ngIf="!payslip">
   <app-spiner />
 </ng-container>
 
-<ng-container *ngIf="!!routeData">
+<ng-container *ngIf="!!payslip">
   <div class="nav" *ngIf="maxIndex > 0">
     <app-button
       [text]="'-'"
@@ -18,4 +18,33 @@
       *ngIf="index < maxIndex"
     />
   </div>
+<div class="payslip">
+  <div class="aditionalinfo">
+    <h4>Payslip</h4>
+    <p>Names : {{payslip.name}}</p>
+    <p>Position : {{payslip.position}}</p>
+    <p>Per : {{payslip.month}}, {{payslip.year}}</p>
+  </div>
+  <div class="values">
+    <div class="earnings">
+    <h4>Earnings</h4>
+    <p>Base : {{payslip.BaseSalary}} USD</p>
+    <p>Overtime : {{payslip.overtimeHours}} USD</p>
+    <p>Holiday overtime : {{payslip.overtimeHolydaysHour}} USD</p>
+    <p>Bonus : {{payslip.bonus}} USD</p> 
+    <p>Child benefits : {{payslip.childBenefits}} USD</p> 
+    </div>
+    <div class="deductions">
+      <h4>Deductions</h4>
+      <p>Unpaid hours : {{payslip.unpaidHours}} USD</p>
+      <p>Sick leave: {{payslip.sickLeaveDays}} USD</p>
+      <p>Total income TAX : {{payslip.taxes.taxesForEmp.incomeTax}} USD</p>
+      <p>Social Security TAX : {{payslip.taxes.taxesForEmp['SSC']}} USD</p>
+      <p>Medicare TAX : {{payslip.taxes.taxesForEmp.at}} USD</p>
+    </div>
+  </div>
+  <div class="total">
+    <h4>Net pay : {{payslip.netPaytoEmpl}} USD</h4>
+  </div>
+</div>
 </ng-container>

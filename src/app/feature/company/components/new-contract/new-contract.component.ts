@@ -13,6 +13,7 @@ import { selectPath } from 'src/app/store/selectors/path.selector';
 import { Subscription } from 'rxjs';
 import { DynamicField } from 'src/app/types/DynamicField';
 import { basicFormValues } from '../hire-employee/hire-employee.component';
+import { FormGeneratorService } from '../../services/form-generator.service';
 
 @Component({
   selector: 'app-new-contract',
@@ -35,6 +36,7 @@ export class NewContractComponent implements OnInit, OnDestroy, OnChanges {
   constructor(
     private store: Store,
     private service: CompanyService,
+    private formService : FormGeneratorService ,
     private router: Router
   ) {}
   ngOnChanges(changes: SimpleChanges): void {}
@@ -43,7 +45,7 @@ export class NewContractComponent implements OnInit, OnDestroy, OnChanges {
       let valuesFromBE = x as {
         [key: string]: string | { [key: string]: string };
       };
-      this.form = this.service.formatNewContractForm(valuesFromBE, path);
+      this.form = this.formService.formatNewContractForm(valuesFromBE, path);
       this.form.forEach((x) => {
         x.forEach((y) => {
           if (y.controlName) {
@@ -82,7 +84,7 @@ export class NewContractComponent implements OnInit, OnDestroy, OnChanges {
           let valuesFromBE = x as {
             [key: string]: string | { [key: string]: string };
           };
-          this.form = this.service.formatNewContractForm(valuesFromBE, newArr);
+          this.form = this.formService.formatNewContractForm(valuesFromBE, newArr);
           this.form.forEach((x) => {
             x.forEach((y) => {
               if (y.controlName) {

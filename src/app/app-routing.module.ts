@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, provideRouter, withComponentInputBinding } from '@angular/router';
+import {  RouterModule, Routes, provideRouter, withComponentInputBinding } from '@angular/router';
+import { WildComponent } from './core/components/wild/wild.component';
 
 const routes: Routes = [{
   path : '' , redirectTo : "auth/login" , pathMatch : 'full'
@@ -12,7 +13,7 @@ const routes: Routes = [{
 },{
   path: ':company',
   loadChildren: () => import('./feature/company/company.module').then(m => m.CompanyModule)
-}];
+},{path : "**" , component : WildComponent }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

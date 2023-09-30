@@ -6,6 +6,7 @@ import { DynamicField } from 'src/app/types/DynamicField';
 import { CompanyService } from '../../services/company.service';
 import { Router } from '@angular/router';
 import { ErrActions } from 'src/app/store/actions/err.actions';
+import { FormGeneratorService } from '../../services/form-generator.service';
 
 export type basicFormValues = {
   [key: string]: string;
@@ -29,13 +30,14 @@ export class HireEmployeeComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store,
     private service: CompanyService,
+    private formService : FormGeneratorService,
     private router: Router
   ) {}
 
   setNewEmplForm(path: string[]) {
     this.form$ = this.service.getPositions(path).subscribe((x) => {
       let valuesFromBE = x as { [key: string]: string };
-      this.form = this.service.formatNewHireForm(valuesFromBE);
+      this.form = this.formService.formatNewHireForm(valuesFromBE);
     });
   }
   getFormValue(forms: basicFormValues) {
@@ -52,7 +54,7 @@ export class HireEmployeeComponent implements OnInit, OnDestroy {
       });
   };
   isReady(){
-            let company = this.path[0];
+        let company = this.path[0];
         let otherLevels = this.path.slice(1).join(`/`);
         this.router.navigate([`${company}/dashboard/${otherLevels}`]);
   }

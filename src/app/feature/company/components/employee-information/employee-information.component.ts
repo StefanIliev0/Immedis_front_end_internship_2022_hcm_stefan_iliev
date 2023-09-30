@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DynamicField } from 'src/app/types/DynamicField';
 import { EmployeeService } from '../../services/employee.service';
 import { Subscription } from 'rxjs';
+import { FormGeneratorService } from '../../services/form-generator.service';
 
 @Component({
   selector: 'app-employee-information',
@@ -13,6 +14,7 @@ export class EmployeeInformationComponent implements OnInit, OnDestroy {
   constructor(
     private activeRoute: ActivatedRoute,
     private service: EmployeeService,
+    private formService : FormGeneratorService, 
     private router: Router
   ) {}
 
@@ -29,14 +31,14 @@ export class EmployeeInformationComponent implements OnInit, OnDestroy {
   req$: Subscription = new Subscription();
   setEdit() {
     this.edit = true;
-    this.form = this.service.generateEditInfoForm(this.routeData);
+    this.form = this.formService.generateEditInfoForm(this.routeData);
   }
   updateData(formData: { [key: string]: string }) {
     this.edit = false;
     this.req$ = this.service
       .editEmplInfo(formData, this.id, this.companyName)
       .subscribe((x) => {
-        this.form = this.service.generateInformationForm(
+        this.form = this.formService.generateInformationForm(
           { ...this.routeData, ...formData },
           this.canManage
         );
@@ -52,7 +54,7 @@ export class EmployeeInformationComponent implements OnInit, OnDestroy {
         };
         this.routeData = emplInfo;
         this.canManage = isHavePermisions;
-        this.form = this.service.generateInformationForm(
+        this.form = this.formService.generateInformationForm(
           this.routeData,
           this.canManage
         );

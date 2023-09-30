@@ -18,6 +18,7 @@ import { PathReducer } from './store/reducers/path.reducer';
 
 import { BackEndService } from './services/back-end.service';
 import { authInterseptorProvider } from './interceptors/auth.interseptor';
+import { AuthService } from './feature/auth/services/auth.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { authInterseptorProvider } from './interceptors/auth.interseptor';
     CoreModule,
     BrowserAnimationsModule,
   ],
-  providers: [BackEndService , authInterseptorProvider],
+  providers: [BackEndService , authInterseptorProvider , AuthService  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

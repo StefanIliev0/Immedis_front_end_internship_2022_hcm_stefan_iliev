@@ -17,6 +17,7 @@ import { selectUser } from 'src/app/store/selectors/user.selectors';
 import { Permission } from 'src/app/types/Permission';
 import { DynamicField } from 'src/app/types/DynamicField';
 import { DropDownAnimation } from '../../animations/dropDownAnimation';
+import { FormGeneratorService } from '../../services/form-generator.service';
 
 type payCheck = {
   overtimeHours: string;
@@ -76,6 +77,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     private router: Router,
     private activeRoute: ActivatedRoute,
     private service: CompanyService,
+    private formService : FormGeneratorService , 
     private store: Store
   ) {}
 
@@ -114,7 +116,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       this.showTableObject = {};
       this.showTableObject[index] = true;
     }
-    this.tableForm = this.service.generateFillTable(tableData);
+    this.tableForm = this.formService.generateFillTable(tableData);
     this.showEmpOptions = {};
   }
   showReleseForm(index: number, endDate: string, name: string) {
@@ -125,7 +127,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       this.showReleaseObject = {};
       this.showReleaseObject[index] = true;
     }
-    this.tableForm = this.service.generateReleseForm(endDate, name);
+    this.tableForm = this.formService.generateReleseForm(endDate, name);
   }
   ShowDetails(id: string) {
     this.router.navigate([`${this.company}/employee/${id}/information`]);

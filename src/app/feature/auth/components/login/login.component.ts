@@ -28,7 +28,6 @@ export class LoginComponent implements OnDestroy {
       this.service.addErr("Sorry , but something in your fields isn't right.");
       return;
     }
-
     this.subscr$ = this.service
       .loginUser(form.value['email'], form.value['password'])
       .subscribe((res: any) => {
@@ -43,7 +42,7 @@ export class LoginComponent implements OnDestroy {
         if (isHavePermisions) {
           this.router.navigate([pathString]);
         } else {
-          this.router.navigate([`${companyName}/profile/${user._id}`]);
+          this.router.navigate([`${companyName}/employee/${user._id}/information`]);
         }
       });
   }

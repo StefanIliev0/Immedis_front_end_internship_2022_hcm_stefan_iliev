@@ -3,4 +3,8 @@
         <p class="title">HCM</p>
         <p class="sub-title">The right solution</p>
     </div>
+    <div class="authDiv" *ngIf="user?.email">
+        <a   routerLink= "{{company}}/employee/{{id}}/information" >{{user?.email}}</a>
+        <a   routerLink= "auth/logout" >Logout</a>
+    </div>
 </header>

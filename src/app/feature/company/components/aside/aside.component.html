@@ -1,12 +1,12 @@
 <ul class="container">
   <ng-container *ngFor="let p of path; index as index">
     <ng-container *ngIf="p.length == 1">
-      <li
+      <li [ngClass]="{'clikable' :  index ==startArr.length - 1  && isHavePermissions}"
         (click)="
-          index == startArr.length - 1 ? navigate(p[index], index) : index
+          index == startArr.length - 1  && isHavePermissions ? navigate(p[index - 1], index) : index
         "
       >
-        <p>{{ p.slice(-1)[0] }}</p>
+        <p [ngClass]="{'clikable' : index == startArr.length - 1 && isHavePermissions}">{{ p.slice(-1)[0] }}</p>
       </li>
     </ng-container>
     <ng-container *ngIf="p.length > 1">

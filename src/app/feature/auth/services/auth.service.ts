@@ -4,14 +4,14 @@ import { Store } from '@ngrx/store';
 import { ErrActions } from 'src/app/store/actions/err.actions';
 import { Permission } from 'src/app/types/Permission';
 
-import { KEY_API } from 'src/app/constaints';
 import { BackEndService } from 'src/app/services/back-end.service';
+import { selectIsAuth } from 'src/app/store/selectors/user.selectors';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
-  AUTH_BASIC_URI: string = `${KEY_API}/auth`;
 
-  constructor(private store: Store, private backEndService: BackEndService) {}
+  constructor(private store: Store, private backEndService: BackEndService , private router : Router) {}
 
   addErr(text: string) {
     this.store.dispatch(ErrActions.add({ err: text }));
@@ -21,17 +21,17 @@ export class AuthService {
   }
 
   loginUser(email: string, password: string) {
-    return this.backEndService.post(`auth/login`, { email, password });
+    return this.backEndService.post(`company/login`, { email, password });
   }
   changePassword(userId: string, companyName: string, newPassword: string) {
-    return this.backEndService.post(`auth/changePassword`, {
+    return this.backEndService.post(`company/changePassword`, {
       userId,
       newPassword,
       companyName,
     });
   }
   generatePath(permissions: Permission[]) {
-    let companyName = permissions[0].title;
+    let companyName = permissions[0].title.replaceAll(` `, ``);
     let pathString = `${companyName}/dashboard`;
     let isDone = false;
     let isHavePermisions = false;
@@ -41,7 +41,7 @@ export class AuthService {
       }
       if (
         !isDone &&
-        !(x.can.menage || x.can.admin || x.can.fill || x.can.read)
+        (x.can.menage || x.can.admin || x.can.fill || x.can.read)
       ) {
         isDone = true;
       }
@@ -51,5 +51,11 @@ export class AuthService {
     });
 
     return { isHavePermisions, pathString, companyName };
+  }
+  isAuth(){
+    return  this.store.select(selectIsAuth); 
+  }
+  navigateTohome(){
+    this.router.navigate([`/`]);
   }
 }

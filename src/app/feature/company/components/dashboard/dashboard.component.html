@@ -10,14 +10,14 @@
         <h3>{{ table.current.name }} {{ table.current.title }}</h3>
       </div>
       <div class="payment">
-        <p *ngIf="permission['write'] || permission['admin']">Total payments</p>
+        <p *ngIf="permission['write'] || permission['admin']">Total payments last month</p>
         <p *ngIf="permission['write'] || permission['admin']">
           {{ table.current.totalPayment }} $
         </p>
       </div>
       <div class="payment">
         <p *ngIf="permission['write'] || permission['admin']">
-          Total payments to employees
+          Total payments to employees last month
         </p>
         <p *ngIf="permission['write'] || permission['admin']">
           {{ table.current.grossSalaryPayment }} $
@@ -30,7 +30,7 @@
           <h3>Employees</h3>
         </div>
         <div class="button">
-          <app-button [text]="'New employee'" (newEvent)="hire()"></app-button>
+          <app-button [text]="'New employee'" (newEvent)="hire()" *ngIf="permission['menage'] || permission['admin']"></app-button>
           <app-button
             *ngIf="pathArr.length == 1 && permission['admin'] && !table.thisMounthAproved"
             [text]="'Approve monthly paychecks'"
@@ -49,10 +49,10 @@
           <p class="name">Name</p>
         </div>
         <div>
-          <p class="grossSalaryPayment">Total payment</p>
+          <p class="grossSalaryPayment">Total payment last month</p>
         </div>
         <div class="last">
-          <p class="totalPayment last">Total payments to employee</p>
+          <p class="totalPayment last">Total payments to employee last month</p>
         </div>
       </div>
       <ng-container *ngFor="let empl of table.employes; index as index">
@@ -73,7 +73,7 @@
               [text]="'Change'"
               *ngIf="
                 showEmpOptions[index] &&
-                (permission['manege'] || permission['admin'])
+                ( permission['admin'])
               "
             ></app-button>
           </div>
@@ -85,7 +85,7 @@
               [text]="'Show details'"
               *ngIf="
                 showEmpOptions[index] &&
-                (permission['manege'] ||
+                (permission['menage'] ||
                   permission['admin'] ||
                   permission['write'] ||
                   permission['fill'])
@@ -131,7 +131,7 @@
               [text]="'Release'"
               *ngIf="
                 showEmpOptions[index] &&
-                (permission['manege'] || permission['admin'])
+                (permission['menage'] || permission['admin'])
               "
               (newEvent)="showReleseForm(index, empl.endDate, empl.name)"
             ></app-button>
@@ -168,7 +168,7 @@
               class="clickable"
               *ngIf="permission['write'] || permission['admin']"
             >
-              Total payments
+              Total payments last month
             </p>
             <p
               class="clickable"
@@ -182,7 +182,7 @@
               class="clickable"
               *ngIf="permission['write'] || permission['admin']"
             >
-              Total payments to employees
+              Total payments to employees last month
             </p>
             <p
               class="clickable"

@@ -8,13 +8,15 @@ import { AuthComponent } from './components/auth/auth.component';
 import { AuthService } from './services/auth.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
     AuthComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    LogoutComponent
   ],
   imports: [
     CommonModule,

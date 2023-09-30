@@ -7,4 +7,5 @@ export type User = {
     permissions : Permission[] , 
     HcmToken : string ,
     isNewEmpl? : boolean , 
+    email : string,
 }

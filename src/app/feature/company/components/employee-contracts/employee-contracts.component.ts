@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DynamicField } from 'src/app/types/DynamicField';
 import { EmployeeService } from '../../services/employee.service';
 import { Subscription } from 'rxjs';
+import { FormGeneratorService } from '../../services/form-generator.service';
 
 @Component({
   selector: 'app-employee-contracts',
@@ -13,6 +14,7 @@ export class EmployeeContractsComponent implements OnInit, OnDestroy {
   constructor(
     private activeRoute: ActivatedRoute,
     private service: EmployeeService,
+    private formService : FormGeneratorService ,
     private router: Router
   ) {}
 
@@ -40,14 +42,14 @@ export class EmployeeContractsComponent implements OnInit, OnDestroy {
   }
   setEdit() {
     this.edit = true;
-    this.form = this.service.generateEditContractForm(this.routeData);
+    this.form = this.formService.generateEditContractForm(this.routeData);
   }
   updateData(formData: { [key: string]: string }) {
     this.edit = false;
     this.req$ = this.service
       .editEmplContract(formData, this.id, this.companyName)
       .subscribe((x) => {
-        this.form = this.service.generateContractForm(
+        this.form = this.formService.generateContractForm(
           { ...this.routeData, ...formData },
           this.canManage,
           this.index
@@ -73,7 +75,7 @@ export class EmployeeContractsComponent implements OnInit, OnDestroy {
         this.routeData = emplContract;
         this.canManage = isHavePermisions;
         this.maxIndex = maxContract - 1;
-        this.form = this.service.generateContractForm(
+        this.form = this.formService.generateContractForm(
           this.routeData,
           this.canManage,
           this.index

@@ -1,1 +1,0 @@
-export let KEY_API = `http://localhost:3000`

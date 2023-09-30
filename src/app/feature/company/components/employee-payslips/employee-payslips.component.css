@@ -12,3 +12,27 @@
     border-radius: 1em;
     padding: 0 1em;
 }
+.payslip{
+    display: flex;
+    flex-direction: column;
+    margin-block: 3em;
+}
+.payslip > div {
+    border: 2px solid var(--backgroud-module);
+    padding: 2em 3em;
+}
+.values{
+    display: flex;
+    justify-content: space-around;
+}
+.values > div {
+    justify-content: flex-start;
+    gap: 40%;
+}
+h4 { 
+    text-align: center;
+    margin: 0.5em;
+}
+p{
+    border-bottom: 2px dotted var(--backgroud-module); 
+}

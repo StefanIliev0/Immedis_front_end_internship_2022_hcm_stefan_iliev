@@ -29,3 +29,6 @@ li {
     rgba(2, 0, 36, 0) 60%
   );
 }
+.clikable{
+  cursor: pointer;
+}
