@@ -79,6 +79,7 @@ export class NewCompanyComponent implements OnDestroy {
 
   //change state of component, control view and company object
   onNextProcess() {
+    // gets form values an add position objects to current level of company 
     if (this.process == 0 && this.askForSubstr == 0) {
       this.CompStructureObject = this.service.addPositions(
         this.structureModelObject,
@@ -88,6 +89,7 @@ export class NewCompanyComponent implements OnDestroy {
         this.subLevelProcess
       );
     }
+    // generates an render ask for sustructures form 
     if (
       this.process == 0 &&
       this.askForSubstr == 0 &&
@@ -98,6 +100,7 @@ export class NewCompanyComponent implements OnDestroy {
       this.askForSubstr = 1;
       return;
     }
+    // set e render next form template 
     if (
       this.process == 0 &&
       this.askForSubstr == 1 &&
@@ -108,6 +111,7 @@ export class NewCompanyComponent implements OnDestroy {
       this.askForSubstr = 0;
       return;
     }
+    // if the last level is reached, check if there are any remaining structures on the upper levels, if there are passages to them.If there are no transitions to the next process
     if (
       (this.process == 0 &&
         this.askForSubstr == 1 &&
@@ -146,6 +150,7 @@ export class NewCompanyComponent implements OnDestroy {
       this.generateNextProcessForm();
       return;
     }
+    // move to next substructure 
     if (this.process == 1 && this.companyLevel < this.companyMaxLevel) {
       this.process = 0;
       this.askModelObj[`askSub`] = 'no';
@@ -210,7 +215,7 @@ export class NewCompanyComponent implements OnDestroy {
       return;
     }
   }
-  //relative to the state adds the regular form to the view
+  //relative to the state of this.process  adds the regular form to the view
   generateNextProcessForm() {
     if (this.process == 0) {
       this.formModel = this.service.generateFirstStructureFormModel(
@@ -249,7 +254,7 @@ export class NewCompanyComponent implements OnDestroy {
   getSruct(form: basicFormValues) {
     this.compStructureTitles = Object.values(form);
   }
-  // change basic view of component
+  // change general view of component depend on  this.generalProcess
   onNext(value: number) {
     this.generalProcess = value;
     if (this.generalProcess == 1) {

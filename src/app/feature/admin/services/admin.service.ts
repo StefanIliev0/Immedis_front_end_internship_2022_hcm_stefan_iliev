@@ -12,11 +12,9 @@ import { Router } from '@angular/router';
 })
 export class AdminService {
   constructor(private backEnd: BackEndService, private router: Router) {}
-
+// redirect to new company dashboard 
   nextRoute(companyName: string) {
-    let newCompName =
-      companyName.trim().substring(0, 1).toLowerCase() +
-      companyName.trim().substring(1).replaceAll(` `, ``);
+    let newCompName =  companyName.replaceAll(` `, ``);
     this.router.navigate([`${newCompName}/dashboard`]);
   }
   //return Observable for creating new company
@@ -70,18 +68,21 @@ export class AdminService {
     CompStructureObject: any,
     subLevelProcess: levelObj
   ) {
+    // make structureModelObject iterable 
     let arr = Object.values(structureModelObject);
     let newArr = [];
+    // traversal form data , every 5-th is position name 
     for (let i = 0; i < arr.length; i += 5) {
       let permisionsArr: any[] = [];
       let currPopsitionObj = {
         title: arr[i],
         permissions: [] as any[],
       };
-      let passed = false;
+      let passed = false; 
+       // traversal by company structyre titles 
       compStructureTitles.forEach((x, y) => {
         let name = '';
-
+      //  if curent level is not passed , name is stucture name by deep in Object 
         if (!passed) {
           switch (y) {
             case 0:
@@ -120,6 +121,7 @@ export class AdminService {
         } else {
           name = '';
         }
+        // if passed name = structural title 
         let perm: any = {
           title: !passed ? name : compStructureTitles[y],
         };
@@ -127,7 +129,7 @@ export class AdminService {
         if (x == compStructureTitles[companyLevel]) {
           passed = true;
         }
-
+        //  constyct and add permission object to user permisions 
         perm.can = {
           read: passed ? Boolean(arr[i + 1]) : false,
           fill: passed ? Boolean(arr[i + 2]) : false,
@@ -139,6 +141,7 @@ export class AdminService {
       currPopsitionObj.permissions = permisionsArr;
       newArr.push(currPopsitionObj);
     }
+    // adds new position object to correct level in company hierarchy
     switch (companyLevel) {
       case 0:
         CompStructureObject.directEmplPositions = newArr;
@@ -172,7 +175,7 @@ export class AdminService {
         ].directEmplPositions = newArr;
         break;
     }
-
+  //  return changed company structure object 
     return CompStructureObject;
   }
   // get names of substructuries from CompStructureObject
@@ -225,7 +228,7 @@ export class AdminService {
     }
     return strArr;
   }
-  // add names to substructories in CompStructureObject
+  // add names to substructories gets from Form in CompStructureObject
   addNamesToStruObj(
     array: string[],
     companyLevel: number,
@@ -293,7 +296,7 @@ export class AdminService {
 
     return CompStructureObject;
   }
-  // generate first form template
+  //generate form for adds new employee position to stucture
   generateFirstStructureFormModel(
     subProcess: number,
     companyLevel: number,
@@ -365,7 +368,7 @@ export class AdminService {
 
     return formModel;
   }
-  //add new name field to first form template
+  //adds new name field to substructure form template
   addName(subProcess: number, formModel: DynamicField[][]) {
     let newName = [
       {
@@ -382,7 +385,7 @@ export class AdminService {
     formModel.splice(formModel.length - 1, 0, newName);
     return formModel;
   }
-  // generate second form template
+  // generate substructure form template
   generateSecondStructureFormModel(
     subProcess: number,
     companyLevel: number,
@@ -417,7 +420,7 @@ export class AdminService {
 
     return formModel;
   }
-  //add new position field to second form template
+  //add new position field to direct employes  form template
   addPosition(subProcess: number, formModel: DynamicField[][]) {
     let newPosition = [
       {
@@ -463,7 +466,7 @@ export class AdminService {
 
     return formModel;
   }
-  //generate form model object
+  //generate vertical hierarchy title field 
   generateCompLevelsStructure(basicCompanyInfo: basicFormValues) {
     let newFormarr: DynamicField[][] = [];
     newFormarr[0] = [];
@@ -485,7 +488,7 @@ export class AdminService {
     });
     return newFormarr;
   }
-  //generate form model object
+  //generate ask for substucture form model object
   generateAskForSubstruct() {
     let formModel = [
       [
@@ -510,7 +513,7 @@ export class AdminService {
     ];
     return formModel;
   }
-  //generate form model object
+  //generate basic info  form model object
   generateBasicCompanyInfoModel() {
     return [
       [
@@ -545,7 +548,7 @@ export class AdminService {
       ],
     ];
   }
-  //generate form model object
+  //generate rules form object
   generateRuleFormModel() {
     return [
       [

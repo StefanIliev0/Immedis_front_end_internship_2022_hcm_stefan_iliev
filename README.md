@@ -242,4 +242,70 @@ The module contains one main path that has five children paths
 
 ### Admin Module  
 
+#### Components 
+
+##### Admin component 
+
+This component is a simple component, it aims to be a module container and render the child components.
+It should also render a button that redirects to the Create a new company page.
+
+##### New company component 
+
+###### Responsibilities 
+
+The responsibility of this component is to derive the logic for creating a new record in the database, construct a New Company object and send it to the server.
+
+###### Dependencies
+
+
+Uses `AdminService` obtained through the constructor function.
+
+###### Workflow 
+During the initial rendering of the element, a form is displayed where the name and number of levels of the new company are noted.
+The next step is to name the individual levels in a vertical line, with the first level being `Company' or the first level of the hierarchy.
+
+After which, in three repeated steps, a tree-like structure of the company begins to be described. In the first step, the positions that can be hired at this level are defined along with their permissions. In the second step, it is verified whether this structure has substructures. If the answer is positive, a form is generated where the names of the structures are defined.
+After that, everything starts to repeat for the first sub-structure, until they are all defined down, then it goes to the next one until the entire structure of the company is defined.
+
+After the structure is defined, a form is generated in which the basic rules are filled according to which the workers will be assigned and their salaries will be calculated.
+
+After this the generated object is sent to the server and the user will be redirected to the Dashbord company page.
+
+
+#### Services 
+
+##### Admin Service 
+
+###### Methods 
+
+1. `nextRoute` - redirect to new company dashboard .
+
+2. `createCompany` - make request  to server for creating new company.
+
+3. `formatCompanyObj` - formating final form object.
+
+4. `addPositions` - add direct employees positioons to corect level in CompStructureObject.
+
+5. `getStrNames` - get corect names of substructuries from CompStructureObject. 
+
+6. `addNamesToStruObj` -  add names to substructories in this level on  CompStructureObject.
+
+7. `generateFirstStructureFormModel` - generate form for adds new employee position to stucture. 
+
+8. `addName` - adds new name field to substructure form template.
+
+9. `generateSecondStructureFormModel` - generate substructure form template. 
+
+10. `addPosition` - add new position field to direct employes  form template.
+
+11. `generateCompLevelsStructure` - generate vertical hierarchy title field . 
+
+12. `generateAskForSubstruct` -   generate ask for substucture form model object. 
+
+13. `generateBasicCompanyInfoModel` - generate basic info  form model object.
+
+14. `generateRuleFormModel` - generate rules form object. 
+
+
+
 ### Company Module
