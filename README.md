@@ -1,27 +1,33 @@
-# CurrentDirectory
+# Human Capital Management App bY Stefan Iliev.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.1.
+## Overview.
 
-## Development server
+This is an app for Human Capital Management.The purpose of the application is to use it to manage the human capital of a small or large company located in a single country. In order to manage the company, you must first create a new one from the Admin account. Where a company record is created specifying a tree structure of the company with each of the structural levels, what positions the employees in that level will be assigned to and what powers the position will have. Then set the rules according to which the salaries will be calculated and features that will keep the newly appointed employees.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+When creating a new company, a company administrator profile is added to it, from which the already appointed employees can be added.As with any employee added, the employee's company account is created with an initial password ("newEmployee").At the first login, the employee is redirected to a page where the password can be changed.
 
-## Code scaffolding
+When a user logs in, according to the permissions he has for the position to which he is assigned, it is sent to the corresponding dashboard (if there are no permissions, it is sent to his personal profile).
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The dashboard has the following functionalities depending on the path and permissions of the employee:
 
-## Build
+1. View human capital spend for the last month separately for each structure and employee.
+2. Appointment of a new employee. 
+3. Changing the position of an already appointed employee.
+4. View employee details.
+5. Addition of data on overtime, sick leave, used annual leave, payable bonus, etc. for the current month.
+6. Termination of an employee's contract. 
+7. Review and approve monthly employee salary supplements.
+8. Movement through the various structures of the company.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+The personal profile has the following features depending on the permissions:
+1. Review and change the information reserved for the employee.
+2. View all contracts of the employee and the ability to change the last active contract.
+3. Review of the specific employee's payslips.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Contents
+1. [Startup](#startup)
+2. [Application structure](#application-structure)
+3. [Modules](#modules)
+4. [Guards](#guards)
+5. [Interseptors](#interseptors)
+6. [Store](#store)
