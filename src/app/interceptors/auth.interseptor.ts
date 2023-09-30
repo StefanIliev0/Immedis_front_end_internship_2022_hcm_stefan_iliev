@@ -18,6 +18,7 @@ export class AuthInterceptor implements HttpInterceptor{
 
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+      // get user from store 
         this.store.select(selectUser).subscribe(res =>  {
             this.user = res; 
         })  
@@ -25,10 +26,11 @@ export class AuthInterceptor implements HttpInterceptor{
             this.isAuth = res; 
         })
         let request = req; 
+        // Checks whether the request is to the server in use.
         if(this.isAuth && req.url.startsWith(environment.KEY_API)){
             this.store.dispatch(ErrActions.remove());
             const HcmToken = (this.user as User).HcmToken ;
-            
+        // add header
             request = req.clone ({
               setHeaders: {
                 HcmToken: HcmToken
@@ -36,6 +38,7 @@ export class AuthInterceptor implements HttpInterceptor{
         })}
         
       return  next.handle(request).pipe(
+        // handle error response and set it in Error Store.
         catchError((err) => {
             this.store.dispatch(ErrActions.add({ err : err.error.error})); 
             console.log(err);

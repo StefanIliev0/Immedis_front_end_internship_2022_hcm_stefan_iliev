@@ -25,6 +25,7 @@ constructor( private fb : FormBuilder , private service : FormService){
 
 }
 submit(){
+//if form is valid send information to parent ,else show message ; 
 if(this.form.invalid){
   this.err = true;
   setTimeout(()=>{
@@ -36,10 +37,12 @@ this.onSubmit.emit(this.form.value);
 }
 
 sendValue(){
+  // send changes to parent component ;
   this.getFormValue.emit(this.form.value); 
 }
 
 ngOnChanges(changes: SimpleChanges): void {
+  // on init and on changes update rendered form and save in variables 
   this.form = this.fb.group(this.service.generateFormGroupObject(this.fromModel));
   this.fieldGroups =  this.service.generateFormTemplate(this.fromModel);
 }

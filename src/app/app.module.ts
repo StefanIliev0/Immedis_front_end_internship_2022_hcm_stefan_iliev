@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
-import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
@@ -19,10 +18,17 @@ import { PathReducer } from './store/reducers/path.reducer';
 import { BackEndService } from './services/back-end.service';
 import { authInterseptorProvider } from './interceptors/auth.interseptor';
 import { AuthService } from './feature/auth/services/auth.service';
+import { HeaderComponent } from './core/components/header/header.component';
+import { FooterComponent } from './core/components/footer/footer.component';
+import { WildComponent } from './core/components/wild/wild.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent ,
+    HeaderComponent,
+    FooterComponent,
+    WildComponent
   ],
   imports: [
     BrowserModule,
@@ -30,8 +36,8 @@ import { AuthService } from './feature/auth/services/auth.service';
     StoreModule.forRoot({ err :  ErrReducer , user : userReducer , struture : companyStructureReducer , path : PathReducer }),
     HttpClientModule,
     ReactiveFormsModule,
+    RouterModule, 
     SharedModule,
-    CoreModule,
     BrowserAnimationsModule,
   ],
   providers: [BackEndService , authInterseptorProvider , AuthService  ],

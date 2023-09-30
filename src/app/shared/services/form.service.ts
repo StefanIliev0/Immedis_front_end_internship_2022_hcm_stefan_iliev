@@ -9,28 +9,32 @@ export class FormService {
   constructor() { }
 
  generateFormTemplate(formObj : DynamicField[][]) {
+  // Sanitize array from vlaue and validators ; 
   return formObj?.map(x => {
   let fieldsLine =  x?.map( fl => {
-  let  {value, validators , ...other } = fl ;
+    // destruct object to get needed data.
+  let  {value, validators , disabled , ...other } = fl ;
   return other 
   })
   return fieldsLine
   })
  }
- 
+  // Make Object that fb accepted
   generateFormGroupObject(formObj : DynamicField[][]){
   let returnFormObj : any = {}; 
   formObj?.forEach(x => {
     x?.forEach( fl => {
+  //skip if type is button or header 
     if(fl.type == "button" || fl.type == "header"){
       return
     }
+    // if disabled - set it and set value and name 
     if(fl.disabled){
       returnFormObj[fl.controlName|| ''] = {value : fl.value , disabled : true}
     }else{
       returnFormObj[fl.controlName|| ''] = [fl.value];
     }
-    
+    // if have validators , structure validators to object by type in validatorsFn[]
     if(fl.validators){
     let validators : ValidatorFn[] = [];
       fl.validators?.forEach(v => {
@@ -55,11 +59,12 @@ export class FormService {
           break ; 
         }
       })
-    
+    // add validator function to object 
     returnFormObj[fl.controlName || ''].push({validators: Validators.compose(validators), updateOn: "blur"})
     }
     })
     })
+  // return formated object 
   return returnFormObj 
   }
 

@@ -12,10 +12,12 @@ export class BackEndService {
 
 
   get(path : string , options? : string[] ){
+    // if has options,  add options in headers 
     let headerString =  options?.join('/') || ''
     return this.http.get(`${this.KEY_API}/${path}`, options? { headers :{ provideData : headerString }} : undefined);
   };
   post(path : string , body : any ,  options? : string[] ){
+    // if has options,  add options in headers 
     let headerString =  options?.join('/') || ''
     return this.http.post(`${this.KEY_API}/${path}` ,  body , options? { headers :{ provideData : headerString }} : undefined);
   };
