@@ -1,3 +1,3 @@
 export const environment = {
-    KEY_API : `http://localhost:3000`
+    KEY_API : `https://kind-lime-attire.cyclic.app`
 };
