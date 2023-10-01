@@ -1,10 +1,8 @@
 import {
   Component,
   Input,
-  OnChanges,
   OnDestroy,
-  OnInit,
-  SimpleChanges,
+  OnInit
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CompanyService } from '../../services/company.service';
@@ -20,7 +18,8 @@ import { FormGeneratorService } from '../../services/form-generator.service';
   templateUrl: './new-contract.component.html',
   styleUrls: ['./new-contract.component.css'],
 })
-export class NewContractComponent implements OnInit, OnDestroy, OnChanges {
+export class NewContractComponent implements OnInit, OnDestroy {
+  // URI params as Input@
   @Input() id = '';
 
   path$: Subscription = new Subscription();
@@ -39,7 +38,15 @@ export class NewContractComponent implements OnInit, OnDestroy, OnChanges {
     private formService : FormGeneratorService ,
     private router: Router
   ) {}
-  ngOnChanges(changes: SimpleChanges): void {}
+  // subscribe to path from store 
+  ngOnInit(): void {
+    this.path$ = this.store.select(selectPath).subscribe((y) => {
+      // on path change update form 
+      this.path = y;
+      this.setNewContractForm(y);
+    });
+  }
+  // gets posible positions and substructures from server and update form 
   setNewContractForm(path: string[]) {
     this.form$ = this.service.getContractData(path, this.id).subscribe((x) => {
       let valuesFromBE = x as {
@@ -55,12 +62,7 @@ export class NewContractComponent implements OnInit, OnDestroy, OnChanges {
       });
     });
   }
-  ngOnInit(): void {
-    this.path$ = this.store.select(selectPath).subscribe((y) => {
-      this.path = y;
-      this.setNewContractForm(y);
-    });
-  }
+  // on form value change update form object in corect format 
   getFormValue(forms: basicFormValues) {
     let newArr: string[] = [this.path[0]];
     let isDone = false;
@@ -74,6 +76,7 @@ export class NewContractComponent implements OnInit, OnDestroy, OnChanges {
         }
       }
     });
+    // on changes level hierarchy update posible position and structures.
     if (
       newArr.length != this.newPath.length ||
       newArr[newArr.length - 1] != this.newPath[this.newPath.length - 1]
@@ -97,11 +100,7 @@ export class NewContractComponent implements OnInit, OnDestroy, OnChanges {
     this.newPath = newArr;
     this.formValues = forms;
   }
-  ngOnDestroy(): void {
-    this.path$.unsubscribe();
-    this.form$.unsubscribe();
-    this.newContract$.unsubscribe();
-  }
+  // Send new contract to server
   sendContract() {
     this.newContract$ = this.service
       .newContract(this.newPath, this.id, this.formValues)
@@ -111,4 +110,10 @@ export class NewContractComponent implements OnInit, OnDestroy, OnChanges {
         this.router.navigate([`${company}/dashboard/${otherLevels}`]);
       });
   }
+  // unsubsribe 
+  ngOnDestroy(): void {
+    this.path$.unsubscribe();
+    this.form$.unsubscribe();
+    this.newContract$.unsubscribe();
+  };
 }

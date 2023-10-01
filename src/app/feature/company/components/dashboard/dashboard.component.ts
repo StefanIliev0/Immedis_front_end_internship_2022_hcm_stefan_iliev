@@ -35,6 +35,7 @@ type payCheck = {
   animations: [DropDownAnimation],
 })
 export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
+  // get params as Input  
   @Input(`leveOne`) l1: string = '';
   @Input(`levelTwo`) l2: string = '';
   @Input(`levelThree`) l3: string = '';
@@ -43,15 +44,16 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   @Input(`levelSix`) l6: string = '';
 
   company: string = this.activeRoute.parent?.snapshot.params['company'] || '';
-
-  progess = 0;
+  // variable that contains current structure data 
   table?: TableObject;
+  // variables that hold information about what is displayed to the user.
   showEmpOptions: { [key: number]: boolean } = {};
   showTableObject: { [key: number]: boolean } = {};
   showReleaseObject: { [key: number]: boolean } = {};
+  // Variables that hold form data 
   tableForm: DynamicField[][] = [];
   formValues: { [key: string]: string } = {};
-
+  // current dashbord path 
   pathArr: string[] = [
     this.company,
     this.l1,
@@ -61,6 +63,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     this.l5,
     this.l6,
   ].filter((x) => x != '' && x != undefined);
+  // variables that holds user premissions arr and permissions for current path 
   permissionsArr: Permission[] = [];
   permission: { [key: string]: boolean } = {
     read: false,
@@ -82,8 +85,10 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   ) {}
 
   async ngOnChanges(changes: SimpleChanges) {
+    // clean variables 
     this.showReleaseObject = {};
     this.showTableObject = {};
+    //  update current location  
     this.pathArr = [
       this.company,
       this.l1,
@@ -96,7 +101,9 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     if(this.pathArr.length == 0) {
       this.pathArr.push("admin")
     }
+    // update  location in store 
     this.store.dispatch(PathActions.add({ path: this.pathArr }));
+    // update user permissions 
     this.permissionsArr = (
       await firstValueFrom(this.store.select(selectUser))
     )?.permissions;
@@ -107,10 +114,13 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
+    // subscribe for location path 
     this.path$ = this.store.select(selectPath).subscribe((y) => {
+      // update view on changes 
       this.setTable(y);
     });
   }
+  // clear show release table object and shows the correct table.
   showFillTable(index: number, tableData: { [key: string]: string }) {
     this.showReleaseObject = {};
     if (this.showTableObject[index]) {
@@ -119,9 +129,10 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       this.showTableObject = {};
       this.showTableObject[index] = true;
     }
+    // set correct values in form 
     this.tableForm = this.formService.generateFillTable(tableData);
-    this.showEmpOptions = {};
   }
+  // shows correct relese form 
   showReleseForm(index: number, endDate: string, name: string) {
     this.showTableObject = {};
     if (this.showReleaseObject[index]) {
@@ -132,22 +143,28 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
     }
     this.tableForm = this.formService.generateReleseForm(endDate, name);
   }
+  // navigate to user detail page 
   ShowDetails(id: string) {
     this.router.navigate([`${this.company}/employee/${id}/information`]);
   };
+    //  navigate to approve paychecks page 
   AprovePaychecks(){
     this.router.navigate([`${this.company}/aprove_paychecks`]);
   }
+  // navigate to position change page 
   changePosition(id: string) {
     this.router.navigate([this.company + '/changeContract/' + id]);
   }
+  // navigate to new emplyee page 
   hire() {
     this.router.navigate([this.company + '/hire']);
   }
   setTable(y: string[]) {
+    // clear and set new tible data 
     this.table = undefined ; 
     this.tableSubs$ = this.service.getTableData(y).subscribe((x) => {
       this.table = x as TableObject;
+    // set substructute names in Store 
       if (this.table.substructures.length > 0) {
         let names = this.table.substructures.map((x) => x.name);
         this.service.setSetSubstrNames(names);
@@ -156,11 +173,13 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       }
     });
   }
+  // navigate to sustructure dashboard 
   navigate(subst: string) {
     this.router.navigate([
       this.router.url.replaceAll(`%20`, ' ') + '/' + subst,
     ]);
   }
+  // sends paycheck data to server 
   submitPaycheck(index: number, emplId: string) {
     let empl = this.table?.employes.find((x) => x.id == emplId);
     if (empl && Object.keys(this.formValues).length == 6) {
@@ -171,6 +190,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
       this.showTableObject = {};
     }
   }
+  // sends relese data to server 
   submitReleseForm(id: string) {
     let endDate = this.formValues[`endDate`]; 
     this.bakcEndSubscription$ = this.service
@@ -181,6 +201,7 @@ export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
         empl['endDate'] = endDate ; }
       });
   }
+  // unsubsribe 
   ngOnDestroy(): void {
     this.tableSubs$.unsubscribe();
     this.path$.unsubscribe();

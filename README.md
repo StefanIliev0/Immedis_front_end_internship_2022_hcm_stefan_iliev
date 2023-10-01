@@ -306,6 +306,114 @@ After this the generated object is sent to the server and the user will be redir
 
 14. `generateRuleFormModel` - generate rules form object. 
 
+#### Routing Module 
 
+The module contains two main paths
+
+1. `admin` - container route.
+    * `dashboard` routes - shows admins company dashboard . 
+
+2. `new` - shows new company page.
 
 ### Company Module
+
+#### Components 
+
+##### Company component 
+
+This is a container component that displays on one side the aside component and on the other side the child components.
+
+##### Aprove paycheck data component 
+
+
+###### Responsibilities 
+
+This component should render a table of all company employees with their monthly reports. At the end of the table, it should display two buttons for confirming or rejecting the reports, respectively.
+
+###### Dependencies
+
+
+Uses `CompanyService` , `Router` and `ActivatedRoute` obtained through the constructor function.
+
+###### Workflow 
+
+On initialization, the component retrieves the table data from the server and renders it. As the cursor moves across the table, it changes the style of the cells to help the user focus on certain fields. When the table is approved, it sends a request to the server and redirects the user to the company's dashboard page. In case of failure, it only redirects the user.
+
+##### Aside component 
+
+
+###### Responsibilities 
+
+This component should visualize the side navigation of the page to help the user know where in the company structure he is and redirect where he wants to perform some actions according to the permissions the user has.
+
+###### Dependencies
+
+
+Uses `CompanyService` , `Router` and `Store` obtained through the constructor function.
+
+###### Workflow 
+
+On initialization, it subscribes to the user's data and generates the initial state based on the specific user's permissions. It then subscribes to the store for path changes. If a change occurs, generate the new path based on similarities and differences with the old one. If there are options for changing the path, clicking on the corresponding cell displays a submenu with options for changing the path.
+
+
+##### Dashboard component 
+
+
+###### Responsibilities 
+
+This is the main component for state control in the company. Its purpose is to render the corresponding company structure. And depending on the permission of the user, give him the opportunity to fill, read, add or change data for individual employees in this structure, as well as to navigate to another structure that is lower than the current one.
+
+###### Dependencies
+
+Gets from the parents component params `company`
+
+Gets levels from params as Inputs. 
+
+Uses `Router` , `ActivatedRoute` , `CompanyService` , `FormGeneratorService` and `Store` obtained through the constructor function.
+
+
+###### Workflow 
+
+During initialization, it takes the parameters from the URL, takes from the server the data of the specific structure in a company, renders the information on the screen and updates the information in the store so that the aside navigation can be updated. When the input parameters are changed, it makes a new request to the server and updates the data. Depending on the user's permissions, different buttons are displayed. When clicked, they redirect to the correct page or show a form to fill in at the appropriate place. If there are substructures, when clicking on the name, the user is redirected to the corresponding dashboard page.
+
+##### Hire employee component 
+
+
+###### Responsibilities 
+
+This component renders a dynamic form in which the data for the appointment of a new employee is filled.
+
+###### Dependencies
+
+Uses `Router` , `ActivatedRoute` , `CompanyService` , `FormGeneratorService` and `Store` obtained through the constructor function.
+
+
+###### Workflow 
+
+During initialization, it takes from the server the possible positions for appointment in the specific structure of the company, after which it generates the form for the appointment of a new employee. Upon confirmation of the form, it displays a message with the email of the new employee. Finally, it redirects to the dashboard.
+
+##### New contract component 
+
+
+###### Responsibilities 
+
+This Component visualizes a table for the reassignment of an existing employee, to another company structure, or to the same one when conditions change.
+
+###### Dependencies
+
+Gets the user Id as Input from the component's parameters.
+
+Uses `Router` , `ActivatedRoute` , `CompanyService` , `FormGeneratorService` and `Store` obtained through the constructor function.
+
+
+###### Workflow 
+
+During initialization, it makes a request to the server in takes the possible structures and positions for each of them, when the path changes, they are updated.
+
+
+
+##### Employee details component 
+
+This is a container component that renders navigation buttons between child components and components.
+
+

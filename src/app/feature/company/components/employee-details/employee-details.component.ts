@@ -12,12 +12,12 @@ export class EmployeeDetailsComponent implements OnInit {
 constructor(private router : Router){
 
 }
-
+// sets path strings 
 ngOnInit(): void {
   this.path = this.router.url.split(`/`).slice(0 , -1).join(`/`); 
   this.pathEnd = this.router.url.split('/').slice(-1)[0]; 
 } 
-
+// navigate to children 
   goTo(path : string){
     this.pathEnd = path;
     this.router.navigate([`${this.path}/${path}`]);
