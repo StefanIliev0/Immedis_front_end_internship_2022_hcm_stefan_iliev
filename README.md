@@ -35,6 +35,97 @@ The personal profile has the following features depending on the permissions:
 
 ## Usage
 
+The initial loading of the application redirects to the login page.
+
+After login, two links appear in the header, on the upper right, one redirects to the user's profile and the other unsubscribes the user and redirects it to the login form.
+
+If the user has permissions in the organization, redirects him to the "Dashboard" page.
+
+If there are no permissions, it redirects to his personal page.
+
+### Dashboard page 
+
+The functionalities in the page are based on the user's permissions. The dashboard consists of blocks vertically one above the other.
+The name of the level on which it is located is written in the first block. To the left of it are written the expenses that were incurred for the corresponding and each unit below it for the last month.
+The second block is a list of employees in this unit.
+If it is on the home page (level 1) and the user has administrative permissions, a button appears in the upper right corner that leads to the monthly statement approval page.
+Next to it is a button that redirects to the page for hiring new employees in this unit.
+When filling out the appointment form, all fields are mandatory except the contract end date field.
+If the contract is open-ended, the field can be left blank.
+After the form is submitted, the email address of the newly appointed employee with the initial password "newEmployee" is written below it.
+At the first login, the employee is redirected to a password change form.
+Under the header are listed the employees who have already started working in this unit (if someone is appointed, but his first working day has not passed, he will not appear in the list).
+Each of the employees is listed with their ID, names, position and what funds were paid to them and for them in the last month based on the user's permissions.
+
+The possible buttons are:
+
+Change - the button redirects to the employee reassignment page. On the reassignment page, you must first select where the employee will be assigned and to what position. The end date is not mandatory.
+
+Show details - redirects to the employee's personal profile.
+
+Fill paycheck - a form is displayed under the corresponding user where the monthly report of the corresponding employee can be filled in. There is no limit to how many times it can be filled in and changed. Pressing again hides the form.
+
+Relese - displays a form where the employee's current contract can be terminated. There is no limit to the number of changes before the end of the contract.
+
+Then (if any) the substructures of that unit are listed. When you click on one of them, you go to the dashboard page of the corresponding unit.
+
+### Aside navigation
+
+When entering the application, it starts from the maximum allowable level of the employee. If there are lower levels, a selection with the inscription "select" appears below the corresponding level. When pressed, a submenu appears from where the user wants to navigate.
+At each level where the user has the option to select , the navigation works the same way as when going back up.
+
+### Profile personal Page 
+
+At the top there are three buttons that switch between three different views.
+
+The first shows the stored information about the employee. Which is a prohibited form. If the user has the option to change the data, there is an "edit" button at the bottom of the form that allows the form to be edited.
+
+The second view shows, like the first, the employee's contracts. If there are more than one, at the top there are buttons to navigate between the contracts.
+The current contract has an option to change.
+
+The third view shows the payslips generated so far for the particular employee.
+
+For all views, if the user does not have permission to see them, a message is displayed.
+
+### New company creation page
+
+In the first view, a name for the new company is set, as well as the maximum number of levels in the vertical direction.
+
+After that, how the structures of the new company will be defined vertically (must be started at the Company level, for example Company , Department , Team )
+
+The next step is to describe step by step each unit of the company in the following order :
+
+1. Fill in the names of the positions that will be appointed in this unit with the corresponding permissions that the people appointed to this position will have. Accordingly, whether they can read the information about the employees of this unit and those under it, whether they can fill in data for the monthly reports, whether they can manage this unit and those under it, and whether they are administrative staff.
+Administrators can do anything in any unit of the company.
+
+2. It is answered whether the corresponding unit has substructures.
+
+3. If there are, fill in the names of these substructures.
+
+After that, the application starts moving down the substructures until it reaches the end. When it reaches the end, it goes back up one level.
+
+Example :
+
+A company named "Shipka", has three vertical levels "Company, Department and Team".
+
+First, the position of employees appointed directly at the Shipka Company level is filled.
+
+Then it is answered that there are sub-structures (Departments). These departments are named "accounting, production and sales"
+
+Then the positions in the "accounting" department are filled, if there are substructures, their names are filled. And the application repeats the steps for the furst substructure.
+
+If not, it goes back up one level and starts asking about the Production department. then for sales department. And so until the entire structure of the company is gone.
+
+In the next step, the basic rules of the company are set. On what basis will the salaries be calculated (monthly, yearly, etc.). The value of various allowances and taxes based on basic salary, etc.
+
+After setting, the company is created.
+
+And a user named `admin@` + company name without spaces + `.com` with password "admin" is created.
+The user can log in with the account and start recording the already appointed people in the company for the respective positions.
+
+Appointees inherit the powers of the position to which they are appointed!
+
+[go back](#contents)
 ## Modules
 
 The application has one main and four additional modules.Each Module has its necessary components, services and router.
