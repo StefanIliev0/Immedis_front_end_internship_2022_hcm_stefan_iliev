@@ -33,9 +33,43 @@ The personal profile has the following features depending on the permissions:
 
 ## Startup 
 
+### Development 
+
+For testing and running locally, you need to copy this repository. Download the node packages with "npm install". Install "Angular CLI " with "npm install -g @angular/cli". And run it  with "ng s" command.
+
+You need to copy [this](https://github.com/StefanIliev0/Angular-booking-service) backend repositories and then install it as well.
+And run it with "npm dun dev".
+
+
+### Development 
+
+You can test the application at this link. --> [link](https://stefaniliev0.github.io/Immedis_front_end_internship_2022_hcm_stefan_iliev/)
+
+
 ## Usage
 
 The initial loading of the application redirects to the login page.
+
+Possible login credentials from an already established company:
+
+email : admin@admin.com ; password : admin | - An administrator profile that can add new companies to the database.
+
+email : admin@FirstCompany.com ; password : admin | - An administrator profile on 'FirstCompany' company .
+
+email : IvanIvanov191@FirstCompany.com ; password : admin | - CEO in 'FirstCompany' company .
+
+email : JohnAndreas149@FirstCompany.com ; password : admin | - Director in Production Department  in 'FirstCompany' company .
+
+email : MilenGeorgiev117@FirstCompany.com ; password : admin | - Employee without permissions in 'FirstCompany' company .
+
+email : MalinaTaneva26@FirstCompany.com ; password : newEmployee | - Director 2 level in 'FirstCompany' company .
+
+email : JivkoAngelov57@FirstCompany.com ; password : newEmployee | - Manager 3 level in 'FirstCompany' company .
+
+email : DeyanTsvetkov193@FirstCompany.com ; password : newEmployee | - Employee with admin permissions in 'FirstCompany' company .
+
+email : DimitrinaRadeva29@FirstCompany.com ; password : newEmployee | - Employee without permissions in 'FirstCompany' company .
+
 
 After login, two links appear in the header, on the upper right, one redirects to the user's profile and the other unsubscribes the user and redirects it to the login form.
 
