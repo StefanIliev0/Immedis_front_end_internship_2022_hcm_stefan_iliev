@@ -522,7 +522,7 @@ On initialization, it takes the employee's last payroll record. If there are mor
 
 #### Services 
 
-##### Company serrvice 
+##### Company service 
 
 ###### Methods 
 
@@ -548,7 +548,7 @@ On initialization, it takes the employee's last payroll record. If there are mor
 
 11. `newContract` - makes request to server for adding new contract to company and employee .
 
-##### Employee serrvice 
+##### Employee service 
 
 ###### Methods 
 
@@ -562,12 +562,12 @@ On initialization, it takes the employee's last payroll record. If there are mor
 
 5. `editEmplContract` - makes request to server for update employee contract data.
 
-##### Forms generator serrvice 
+##### Forms generator service 
 
-All methods of this service serve to generate dynamic form objects against the passed arguments. 
+All methods of this service serve to generate dynamic form objects according to the passed arguments. 
 
 
-#### Routing Modyle 
+#### Routing Module S
 
 The module contains two main path
 
