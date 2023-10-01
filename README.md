@@ -26,11 +26,14 @@ The personal profile has the following features depending on the permissions:
 
 ## Contents
 1. [Startup](#startup)
-2. [Modules](#modules)
-3. [Store](#store)
+2. [Usage](#usage)
+3. [Modules](#modules)
+4. [Store](#store)
 
 
 ## Startup 
+
+## Usage
 
 ## Modules
 
@@ -74,6 +77,9 @@ It depends on the user registered in the Store.
 This is a simple component that indicates that a problem has occurred or the path is incorrect and asks the user to log in again.
 
 
+
+[Go back](#contents)
+
 #### Services 
 
 ##### Back-end Service 
@@ -96,11 +102,30 @@ Responsible for sending the information about the current user to the server and
 It depends on the current status of User Store
 
 
-#### Guard 
+#### Guards 
 
-Check for User in User Store.If not have User, redirect to Login page.
+Check for User in User Store.If have User return boolean Observable ,if not have, redirect to Login page.
 
 Depends on Auth Service.
+
+#### Store 
+
+
+###### User Store  
+
+It is used to store and distribute information about the current user.
+
+###### Company structure Store  
+
+It is used to store and distribute the information about the names of the substructures of the specific company structure.
+
+###### Path Store  
+
+It is used to store and distribute the information about the last used navigation path in the company structure.
+
+###### Error Store  
+
+It is used to store and distribute a message saved by one of the components in the application or received from the server.
 
 #### Routing Module 
 
@@ -111,6 +136,9 @@ The module serves five routes.
 3. 'admin' - loading Admin Module. 
 4. ':company' - loading Company module.
 5. "**" - render Wild Component.
+
+
+[Go back](#contents)
 
 ### Shared Module 
 
@@ -164,6 +192,9 @@ Gets Error message from Error Store ;
 
 This is a simple component that should render an animation on the screen until the data arrives from the server.
 
+
+[Go back](#contents)
+
 #### Services
 
 ##### Form service
@@ -213,6 +244,9 @@ When sending, it checks whether the data is correct. If so, it sends a user logi
 
 This is a simple component that serves to clear the data for the user. After clearing the data from the Store, it redirects the user to the login page.
 
+
+[Go back](#contents)
+
 #### Services 
 
 ##### Auth Service 
@@ -233,12 +267,15 @@ This is a simple component that serves to clear the data for the user. After cle
 
 #### Routing module 
 
-The module contains one main path that has five children paths 
+The module contains one main path that has three children paths 
 
 1. Start Route - container route.
     * login - shows Login page . 
     * change_password - shows Change password page. 
     * logout - execute logout page. 
+
+
+[Go back](#contents)
 
 ### Admin Module  
 
@@ -272,6 +309,8 @@ After the structure is defined, a form is generated in which the basic rules are
 After this the generated object is sent to the server and the user will be redirected to the Dashbord company page.
 
 
+
+[Go back](#contents)
 #### Services 
 
 ##### Admin Service 
@@ -314,6 +353,9 @@ The module contains two main paths
     * `dashboard` routes - shows admins company dashboard . 
 
 2. `new` - shows new company page.
+
+
+[Go back](#contents)
 
 ### Company Module
 
@@ -416,4 +458,131 @@ During initialization, it makes a request to the server in takes the possible st
 
 This is a container component that renders navigation buttons between child components and components.
 
+##### Employee information component 
 
+
+###### Responsibilities 
+
+This component should render the information stored for the employee as well if he has the authority to change it.
+
+###### Dependencies
+
+Gets the user Id as Input from the component's parameters.
+
+Uses `Router` , `ActivatedRoute` , `EmployeeService` and `FormGeneratorService`  obtained through the constructor function.
+
+
+###### Workflow 
+
+During initialization, it takes the employee's data from the server and whether the user has permission to change them. If the user does not have permission to see them, it displays them, if not, it prints a message. If the user has the right to edit, a button is added to the form. When the button is pressed, the form is generated anew, allowing the fields to be changed. When the form is accepted, the data is sent to the server and the form is updated.
+
+
+
+##### Employee contracts component 
+
+
+###### Responsibilities 
+
+This component should render the information stored for the employee`s contracts as well if he has the authority to change it.
+
+###### Dependencies
+
+Gets the user Id as Input from the component's parameters.
+
+Uses `Router` , `ActivatedRoute` , `EmployeeService` and `FormGeneratorService`  obtained through the constructor function.
+
+
+###### Workflow 
+
+During initialization, it retrieves the employee's contract details from the server and whether the user has permission to modify them. If the user does not have permission to see them, it shows them, if not, it prints a message. If there is more than one contract, buttons appear to change the displayed contract. If the user has edit rights, a button is added to the form. When the button is pressed, the form is generated anew, allowing the fields to be changed. When the form is accepted, the data is sent to the server and the form is updated.
+
+##### Employee payslips component 
+
+
+###### Responsibilities 
+
+This component should render the information stored for the employee`s payslips or message if user is not apporove to see it.
+
+###### Dependencies
+
+Gets the user Id as Input from the component's parameters.
+
+Uses `Router` , `ActivatedRoute` , `EmployeeService` and `FormGeneratorService`  obtained through the constructor function.
+
+
+###### Workflow 
+
+On initialization, it takes the employee's last payroll record. If there are more than one, buttons appear to change the displayed pay slip. If the user does not have permission to see it, a message appears.
+
+
+
+
+
+[Go back](#contents)
+
+#### Services 
+
+##### Company serrvice 
+
+###### Methods 
+
+1. `getTableData` - makes request to server for getting structure data.
+
+2. `setSetSubstrNames` - sets substructuries in Store.
+
+3. `generatePathArr` - generate path array from users permissions.
+
+4. `getPaychecks` - makes request to server for getting paychecks data.
+
+5. `approvePaychecks` - makes request to server for approving paychecks data.
+
+6. `getUserPerm` - checks what permissions the user has on the corresponding structure. 
+
+7. `addPaycheck` - makes request to server for update paycheck data to employee contract . 
+
+8. `releseEmpl` - makes request to server for update end date string to employee contract. 
+
+9. `getPositions` - makes request to server for getting available positions in current structure . 
+
+10. `addEmpl` - makes request to server for adding new employee to company.  
+
+11. `newContract` - makes request to server for adding new contract to company and employee .
+
+##### Employee serrvice 
+
+###### Methods 
+
+1. `getInformationAboutEmpl` - makes request to server for getting employee data.
+
+2. `getEmplContract` - makes request to server for getting employee contract data.
+
+3. `getEmplPayslip` - makes request to server for getting employee payslip data.
+
+4. `editEmplInfo` - makes request to server for update employee data.
+
+5. `editEmplContract` - makes request to server for update employee contract data.
+
+##### Forms generator serrvice 
+
+All methods of this service serve to generate dynamic form objects against the passed arguments. 
+
+
+#### Routing Modyle 
+
+The module contains two main path
+
+1. ` ` - container route.
+    * `dashboard` - shows Dashboard page . 
+    * `hire` - shows New employee page. 
+    * `changeContract/:id` -  shows New contract page. 
+    * `employee/:id` - shows Employee details page.
+        * `information` - shows Employee information data.
+        * `contracts` - shows Employee contract data.
+        * `payslips` - shows Employee payslip data.
+2. `aprove_paychecks` - shows Approve paychecks page.
+
+
+
+
+
+[Go back](#contents)

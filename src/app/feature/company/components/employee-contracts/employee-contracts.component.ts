@@ -20,49 +20,27 @@ export class EmployeeContractsComponent implements OnInit, OnDestroy {
 
   id: string = this.activeRoute.parent?.snapshot.params['id'] || '';
   companyName = this.router.url.split(`/`)[1];
-  curEmpl: any;
+
+
+
+
   form: DynamicField[][] = [];
   formValues: { [key: string]: string } = {};
+  routeData: { [key: string]: string } = {};
   canManage: string = '';
   edit: boolean = false;
-  routeData: { [key: string]: string } = {};
+
+
   index: number = 0;
   maxIndex: number = 0;
 
   routeData$: Subscription = new Subscription();
   req$: Subscription = new Subscription();
 
-  changeIndex(type: string) {
-    if (type == 'negative') {
-      this.index -= 1;
-    } else {
-      this.index += 1;
-    }
-    this.getData();
-  }
-  setEdit() {
-    this.edit = true;
-    this.form = this.formService.generateEditContractForm(this.routeData);
-  }
-  updateData(formData: { [key: string]: string }) {
-    this.edit = false;
-    this.req$ = this.service
-      .editEmplContract(formData, this.id, this.companyName)
-      .subscribe((x) => {
-        this.form = this.formService.generateContractForm(
-          { ...this.routeData, ...formData },
-          this.canManage,
-          this.index
-        );
-      });
-  }
   ngOnInit(): void {
     this.getData();
   }
-  ngOnDestroy(): void {
-    this.routeData$.unsubscribe();
-    this.req$.unsubscribe();
-  }
+  // gets data from server and set basic variables 
   getData() {
     this.routeData$ = this.service
       .getEmplContract(this.id, this.companyName, this.index)
@@ -81,5 +59,36 @@ export class EmployeeContractsComponent implements OnInit, OnDestroy {
           this.index
         );
       });
+  }
+  // change index on contract and get new contract 
+  changeIndex(type: string) {
+    if (type == 'negative') {
+      this.index -= 1;
+    } else {
+      this.index += 1;
+    }
+    this.getData();
+  }
+  // rerender form with allow to change fialds 
+  setEdit() {
+    this.edit = true;
+    this.form = this.formService.generateEditContractForm(this.routeData);
+  }
+  // sends data to server and update form 
+  updateData(formData: { [key: string]: string }) {
+    this.edit = false;
+    this.req$ = this.service
+      .editEmplContract(formData, this.id, this.companyName)
+      .subscribe((x) => {
+        this.form = this.formService.generateContractForm(
+          { ...this.routeData, ...formData },
+          this.canManage,
+          this.index
+        );
+      });
+  }
+  ngOnDestroy(): void {
+    this.routeData$.unsubscribe();
+    this.req$.unsubscribe();
   }
 }

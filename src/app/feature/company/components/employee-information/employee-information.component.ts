@@ -11,12 +11,6 @@ import { FormGeneratorService } from '../../services/form-generator.service';
   styleUrls: ['./employee-information.component.css'],
 })
 export class EmployeeInformationComponent implements OnInit, OnDestroy {
-  constructor(
-    private activeRoute: ActivatedRoute,
-    private service: EmployeeService,
-    private formService : FormGeneratorService, 
-    private router: Router
-  ) {}
 
   id: string = this.activeRoute.parent?.snapshot.params['id'] || '';
   companyName = this.router.url.split(`/`)[1];
@@ -29,21 +23,16 @@ export class EmployeeInformationComponent implements OnInit, OnDestroy {
 
   routeData$: Subscription = new Subscription();
   req$: Subscription = new Subscription();
-  setEdit() {
-    this.edit = true;
-    this.form = this.formService.generateEditInfoForm(this.routeData);
-  }
-  updateData(formData: { [key: string]: string }) {
-    this.edit = false;
-    this.req$ = this.service
-      .editEmplInfo(formData, this.id, this.companyName)
-      .subscribe((x) => {
-        this.form = this.formService.generateInformationForm(
-          { ...this.routeData, ...formData },
-          this.canManage
-        );
-      });
-  }
+
+  
+  constructor(
+    private activeRoute: ActivatedRoute,
+    private service: EmployeeService,
+    private formService : FormGeneratorService, 
+    private router: Router
+  ) {}
+
+    // get data from server 
   ngOnInit(): void {
     this.routeData$ = this.service
       .getInformationAboutEmpl(this.id, this.companyName)
@@ -52,10 +41,29 @@ export class EmployeeInformationComponent implements OnInit, OnDestroy {
           emplInfo: { [key: string]: string };
           isHavePermisions: string;
         };
+        // sets base variables 
         this.routeData = emplInfo;
         this.canManage = isHavePermisions;
+
         this.form = this.formService.generateInformationForm(
           this.routeData,
+          this.canManage
+        );
+      });
+  }
+// rerender form with allowed to change fields 
+  setEdit() {
+    this.edit = true;
+    this.form = this.formService.generateEditInfoForm(this.routeData);
+  }
+  // send to server updated data and stop editing 
+  updateData(formData: { [key: string]: string }) {
+    this.edit = false;
+    this.req$ = this.service
+      .editEmplInfo(formData, this.id, this.companyName)
+      .subscribe((x) => {
+        this.form = this.formService.generateInformationForm(
+          { ...this.routeData, ...formData },
           this.canManage
         );
       });

@@ -20,27 +20,20 @@ export class EmployeePayslipsComponent implements OnInit , OnDestroy {
 
   id: string = this.activeRoute.parent?.snapshot.params['id'] || '';
   companyName = this.router.url.split(`/`)[1];
+
+  
   index: number = 0;
   maxIndex: number = 0;
   payslip? : Payslip ; 
   isHavePermisions : boolean = false; 
-  routeData$: Subscription = new Subscription();
 
-  changeIndex(type: string) {
-    if (type == 'negative') {
-      this.index -= 1;
-    } else {
-      this.index += 1;
-    }
-    this.getData();
-  }
+
+  routeData$: Subscription = new Subscription();
 
   ngOnInit(): void {
     this.getData();
   }
-  ngOnDestroy(): void {
-    this.routeData$.unsubscribe();
-  }
+  // gets data from server and set basic variables 
   getData() {
     this.routeData$ = this.service
       .getEmplPayslip(this.id, this.companyName, this.index)
@@ -54,5 +47,18 @@ export class EmployeePayslipsComponent implements OnInit , OnDestroy {
         this.isHavePermisions = isHavePermisions;
         this.maxIndex = maxPayslips - 1;
       });
+  }
+  // change index on contract and get new payslip 
+  changeIndex(type: string) {
+    if (type == 'negative') {
+      this.index -= 1;
+    } else {
+      this.index += 1;
+    }
+    this.getData();
+  }
+  // unsubscribe 
+  ngOnDestroy(): void {
+    this.routeData$.unsubscribe();
   }
 }
