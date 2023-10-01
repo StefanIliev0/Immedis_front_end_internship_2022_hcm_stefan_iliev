@@ -41,7 +41,7 @@ You need to copy [this](https://github.com/StefanIliev0/Angular-booking-service)
 And run it with "npm dun dev".
 
 
-### Development 
+### Production 
 
 You can test the application at this link. --> [link](https://stefaniliev0.github.io/Immedis_front_end_internship_2022_hcm_stefan_iliev/)
 
