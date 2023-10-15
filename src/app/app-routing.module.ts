@@ -5,9 +5,6 @@ import { WildComponent } from './core/components/wild/wild.component';
 const routes: Routes = [{
   path : '' , redirectTo : "auth/login" , pathMatch : 'full'
 },{
-  path: 'auth',
-  loadChildren: () => import('./feature/auth/auth.module').then(m => m.AuthModule)
-},{
   path: 'admin',
   loadChildren: () => import('./feature/admin/admin.module').then(m => m.AdminModule)
 },{
