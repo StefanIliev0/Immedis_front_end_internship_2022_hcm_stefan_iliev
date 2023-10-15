@@ -22,7 +22,6 @@ import { HeaderComponent } from './core/components/header/header.component';
 import { FooterComponent } from './core/components/footer/footer.component';
 import { WildComponent } from './core/components/wild/wild.component';
 import { RouterModule } from '@angular/router';
-import { AuthModule } from './feature/auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +32,6 @@ import { AuthModule } from './feature/auth/auth.module';
   ],
   imports: [
     BrowserModule,
-    AuthModule,
     AppRoutingModule,
     StoreModule.forRoot({ err :  ErrReducer , user : userReducer , struture : companyStructureReducer , path : PathReducer }),
     HttpClientModule,

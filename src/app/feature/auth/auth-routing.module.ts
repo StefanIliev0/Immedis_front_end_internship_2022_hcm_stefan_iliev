@@ -6,7 +6,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { AuthComponent } from './components/auth/auth.component';
 
 const routes: Routes = [
-  {path:"auth", component : AuthComponent , 
+  {path:"", component : AuthComponent, 
   children : [
     {path : "login" , component : LoginComponent},
     {path : `change_password` , component : ChangePasswordComponent},
